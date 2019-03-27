@@ -19,9 +19,9 @@ spec.source_files   = "Base-UI-Utils/{BaseController,Extension,Tools}/*.swift"
 spec.requires_arc   = true
 spec.swift_version  =  ' 4.2 '
 spec.frameworks     = "Foundation","UIKit","CoreGraphics"
-spec.libraries ='icucore', 'sqlite3'
+spec.libraries      = 'icucore', 'sqlite3'
 
-spec.xcconfig       =  { "USER_HEADER_SEARCH_PATHS" => "${PODS_ROOT}/Base-UI-Utils/Base-UI-Utils/{BaseController,Extension,Tools}" }
+#spec.xcconfig       =  { "USER_HEADER_SEARCH_PATHS" => "${PODS_ROOT}/Base-UI-Utils/Base-UI-Utils/{BaseController,Extension,Tools}" }
 
 spec.subspec 'BaseController' do |a|
 a.source_files = "Base-UI-Utils/BaseController/*.swift"
