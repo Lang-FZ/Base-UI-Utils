@@ -18,6 +18,6 @@ spec.source       = { :git => "https://github.com/Lang-FZ/Base-UI-Utils.git", :t
 spec.source_files = "Base-UI-Utils/{BaseController,Extension,Tools}/*.swift"
 spec.requires_arc = true
 
-
+spec.swift_version =  ' 4.2 '
 
 end
