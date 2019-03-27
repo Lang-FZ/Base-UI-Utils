@@ -18,16 +18,16 @@ Pod::Spec.new do |spec|
   spec.platform         = :ios, "9.0"
   spec.source           = { :git => "https://github.com/Lang-FZ/Base-UI-Utils.git", :tag => "#{spec.version}" }
 
-  spec.subspec 'BaseController' do |baseController|
-    baseController.source_files = "Base-UI-Utils/BaseController/*.swift"
+  spec.subspec 'BaseController' do |a|
+    a.source_files = "Base-UI-Utils/BaseController/*.swift"
   end
 
-  spec.subspec 'Extension' do |extension|
-    extension.source_files = "Base-UI-Utils/Extension/*.swift"
+  spec.subspec 'Extension' do |a|
+    a.source_files = "Base-UI-Utils/Extension/*.swift"
   end
 
-  spec.subspec 'Tools' do |tools|
-    tools.source_files = "Base-UI-Utils/Tools/*.swift"
+  spec.subspec 'Tools' do |a|
+    a.source_files = "Base-UI-Utils/Tools/*.swift"
   end
 
 end
