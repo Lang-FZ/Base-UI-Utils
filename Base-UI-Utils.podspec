@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   spec.license          = "MIT (Base-UI-Utils)"
   spec.author           = { "LangFZ" => "446003664@qq.com" }
   spec.platform         = :ios, "9.0"
-  spec.source           = { :git => "https://github.com/Lang-FZ/Base-UI-Utils.git", :tag => "spec.version.to_spec" }
+  spec.source       = { :git => "https://github.com/Lang-FZ/Base-UI-Utils.git", :tag => "#{spec.version}" }
 
   spec.source_files = "Base-UI-Utils/{BaseController,Extension,Tools}/*.swift"
 
