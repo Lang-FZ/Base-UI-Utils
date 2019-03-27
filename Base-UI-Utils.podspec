@@ -20,16 +20,6 @@ Pod::Spec.new do |spec|
 
   spec.source_files = "Base-UI-Utils/{BaseController,Extension,Tools}/*.swift"
 
-  spec.subspec 'BaseController' do |a|
-    a.source_files = "Base-UI-Utils/BaseController/*.swift"
-  end
-
-  spec.subspec 'Extension' do |a|
-    a.source_files = "Base-UI-Utils/Extension/*.swift"
-  end
-
-  spec.subspec 'Tools' do |a|
-    a.source_files = "Base-UI-Utils/Tools/*.swift"
-  end
+  
 
 end
