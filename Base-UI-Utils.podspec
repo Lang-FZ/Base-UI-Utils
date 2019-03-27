@@ -10,15 +10,13 @@ Pod::Spec.new do |spec|
                             DESC
 
   spec.homepage         = "https://github.com/Lang-FZ/Base-UI-Utils"
-  spec.xcconfig         =  { "USER_HEADER_SEARCH_PATHS" => "${PODS_ROOT}/Base-UI-Utils/Base-UI-Utils/{BaseController,Extension,Tools}" }
+  spec.requires_arc     = true
+#spec.xcconfig         =  { "USER_HEADER_SEARCH_PATHS" => "${PODS_ROOT}/Base-UI-Utils/Base-UI-Utils/{BaseController,Extension,Tools}" }
 
   spec.license          = "MIT (Base-UI-Utils)"
   spec.author           = { "LangFZ" => "446003664@qq.com" }
   spec.platform         = :ios, "9.0"
   spec.source           = { :git => "https://github.com/Lang-FZ/Base-UI-Utils.git", :tag => "#{spec.version}" }
-
-#spec.source_files = "Base-UI-Utils/{BaseController,Extension,Tools}/*.swift"
-  spec.requires_arc     = true
 
   spec.subspec 'BaseController' do |baseController|
     baseController.source_files = "Base-UI-Utils/BaseController/*.swift"
@@ -31,6 +29,5 @@ Pod::Spec.new do |spec|
   spec.subspec 'Tools' do |tools|
     tools.source_files = "Base-UI-Utils/Tools/*.swift"
   end
-
 
 end
