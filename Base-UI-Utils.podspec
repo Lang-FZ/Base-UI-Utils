@@ -9,7 +9,6 @@ spec.description    = <<-DESC
 DESC
 
 spec.homepage       = "https://github.com/Lang-FZ/Base-UI-Utils"
-spec.public_header_files    = "Base-UI-Utils/{BaseController,Extension,Tools}/*.swift"
 
 spec.license        = "MIT"
 spec.author         = { "LangFZ" => "446003664@qq.com" }
