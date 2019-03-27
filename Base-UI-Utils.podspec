@@ -2,10 +2,10 @@ Pod::Spec.new do |spec|
 
   spec.name         = "Base-UI-Utils"
   spec.version      = "0.0.1"
-  spec.summary      = "基础UI 工具类 方便快速搭建项目"
+  spec.summary      = "方便快速搭建项目"
 
   spec.description  = <<-DESC
-                方便快速搭建小项目
+                基础UI 工具类 方便快速搭建小项目
                    DESC
 
   spec.homepage     = "https://github.com/Lang-FZ/Base-UI-Utils"
@@ -18,5 +18,7 @@ Pod::Spec.new do |spec|
 
   spec.source_files = "Base-UI-Utils/{BaseController,Extension,Tools}/*.swift"
   spec.requires_arc = true
+
+  spec.swift_version =  ' 4.2 '
 
 end
