@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
 spec.name           = "Base-UI-Utils"
-spec.version        = "0.0.5"
+spec.version        = "0.0.6"
 spec.summary        = "方便快速搭建项目"
 
 spec.description    = <<-DESC
@@ -18,7 +18,7 @@ spec.source         = { :git => "https://github.com/Lang-FZ/Base-UI-Utils.git", 
 spec.requires_arc   = true
 spec.swift_version  =  ' 4.2 '
 spec.frameworks     = "UIKit"
-spec.default_subspec    = {"Tools","BaseController","Extension"}
+spec.default_subspec    = "Tools","BaseController","Extension"
 
 spec.xcconfig       =  { "USER_HEADER_SEARCH_PATHS" => "${PODS_ROOT}/Base-UI-Utils/Base-UI-Utils/{BaseController,Extension,Tools}" }
 
