@@ -12,22 +12,22 @@ import UIKit
 @objc public protocol NoneNavigationBarProtocol {}
 @objc public protocol NoneTabBarProtocol {}
 
-public class BaseViewController: UIViewController {
+open class BaseViewController: UIViewController {
 
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         self.hidesBottomBarWhenPushed = true
     }
-    override public func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         if self.conforms(to: NoneTabBarProtocol.self) {
             self.hidesBottomBarWhenPushed = false
         }
     }
 }
 
-public class NoneNaviBarController: BaseViewController,NoneNavigationBarProtocol {
+open class NoneNaviBarController: BaseViewController,NoneNavigationBarProtocol {
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
     }
 }

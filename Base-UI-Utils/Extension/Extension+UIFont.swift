@@ -59,7 +59,7 @@ public enum FontName:String {
     case OpenSansSemibold = "OpenSans-Semibold"
 }
 
-extension UIFont {
+public extension UIFont {
     
     public class func custom(_ customFontName:FontName, size:CGFloat) -> UIFont {
         

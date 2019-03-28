@@ -8,14 +8,14 @@
 
 import UIKit
 
-public class BaseNavigationController: UINavigationController,UIGestureRecognizerDelegate {
+open class BaseNavigationController: UINavigationController,UIGestureRecognizerDelegate {
 
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         self.interactivePopGestureRecognizer?.delegate = self
         self.delegate = self
     }
-    override public var shouldAutorotate : Bool {
+    override open var shouldAutorotate : Bool {
         return true
     }
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -25,7 +25,7 @@ public class BaseNavigationController: UINavigationController,UIGestureRecognize
 
 extension BaseNavigationController: UINavigationControllerDelegate {
 
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         
         if let viewController = self.viewControllers.last {
             // MARK: - 不需要侧滑返回的类
@@ -35,7 +35,7 @@ extension BaseNavigationController: UINavigationControllerDelegate {
         return self.viewControllers.count > 1 ? true : false
     }
     
-    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    open func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         
         var isHidden = false
         // MARK: - 不需要导航条的类
