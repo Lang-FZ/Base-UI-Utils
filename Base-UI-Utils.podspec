@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
 spec.name           = "Base-UI-Utils"
-spec.version        = "0.0.8"
+spec.version        = "0.0.9"
 spec.summary        = "方便快速搭建项目"
 
 spec.description    = <<-DESC

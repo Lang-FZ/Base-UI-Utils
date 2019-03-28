@@ -8,26 +8,26 @@
 
 import UIKit
 
-@objc protocol NoneInteractivePopGestureProtocol {}
-@objc protocol NoneNavigationBarProtocol {}
-@objc protocol NoneTabBarProtocol {}
+@objc public protocol NoneInteractivePopGestureProtocol {}
+@objc public protocol NoneNavigationBarProtocol {}
+@objc public protocol NoneTabBarProtocol {}
 
-class BaseViewController: UIViewController {
+public class BaseViewController: UIViewController {
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         self.hidesBottomBarWhenPushed = true
     }
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         if self.conforms(to: NoneTabBarProtocol.self) {
             self.hidesBottomBarWhenPushed = false
         }
     }
 }
 
-class NoneNaviBarController: BaseViewController,NoneNavigationBarProtocol {
+public class NoneNaviBarController: BaseViewController,NoneNavigationBarProtocol {
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
     }
 }

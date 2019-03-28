@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let kScreen: CGRect = UIScreen.main.bounds
+public let kScreen: CGRect = UIScreen.main.bounds
 public let kScreenW: CGFloat = kScreen.size.width
 public let kScreenH: CGFloat = kScreen.size.height
 
@@ -23,14 +23,14 @@ public func frameMath(_ frame: CGFloat) -> CGFloat {
 }
 
 // MARK: - NavigationBar
-private func getNavigationBarHeight() -> CGFloat {
+public func getNavigationBarHeight() -> CGFloat {
     if isIphoneX() {
         return CGFloat.init(88)
     } else {
         return CGFloat.init(64)
     }
 }
-private func getStatusHeight() -> CGFloat {
+public func getStatusHeight() -> CGFloat {
     if isIphoneX() {
         return CGFloat.init(44)
     } else {
