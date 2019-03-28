@@ -63,7 +63,7 @@ public extension UIFont {
     
     public class func custom(_ customFontName:FontName, size:CGFloat) -> UIFont {
         
-        if let font:UIFont = UIFont.init(name: customFontName.rawValue, size: frameMath(size)) {
+        if let font:UIFont = UIFont.init(name: customFontName.rawValue, size: frameMath_static(size)) {
             return font
         } else {
             return UIFont.systemFont(ofSize: size)
