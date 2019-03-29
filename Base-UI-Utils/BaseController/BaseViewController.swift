@@ -10,16 +10,16 @@ import UIKit
 
 @objc public protocol NoneInteractivePopGestureProtocol {}
 @objc public protocol NoneNavigationBarProtocol {}
-@objc public protocol NoneTabBarProtocol {}
+@objc public protocol HadTabBarProtocol {}
 
 open class BaseViewController: UIViewController {
-
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.hidesBottomBarWhenPushed = true
     }
     override open func viewWillAppear(_ animated: Bool) {
-        if self.conforms(to: NoneTabBarProtocol.self) {
+        if self.conforms(to: HadTabBarProtocol.self) {
             self.hidesBottomBarWhenPushed = false
         }
     }
