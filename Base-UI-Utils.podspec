@@ -42,7 +42,9 @@ end
 spec.subspec 'PhotoViewer' do |a|
 a.ios.deployment_target = "9.0"
 a.source_files = "Base-UI-Utils/Module/PhotoViewer/{Controller,Model,View}/*.swift"
-a.dependency "Base-UI-Utils"
+a.dependency "Base-UI-Utils/BaseController"
+a.dependency "Base-UI-Utils/Extension"
+a.dependency "Base-UI-Utils/Tools"
 a.dependency "SDWebImage"
 a.resource_bundles = {'PhotoViewer' => ['Base-UI-Utils/ImageSet/PhotoViewer/*']}
 end
