@@ -55,7 +55,6 @@ class PhotoViewerCollectionCell: UICollectionViewCell {
     public lazy var scroll: UIScrollView = {
         
         let scroll = UIScrollView.init(frame: CGRect.init(x: 0, y: 0, width: kScreenW, height: kScreenH))
-        scroll.contentSize = CGSize.init(width: kScreenW, height: kScreenH)
         scroll.showsHorizontalScrollIndicator = false
         scroll.showsVerticalScrollIndicator = false
         scroll.delegate = self
@@ -88,6 +87,8 @@ class PhotoViewerCollectionCell: UICollectionViewCell {
     // MARK: - 初始化
     override init(frame: CGRect) {
         super.init(frame: frame)
+        scroll.frame = CGRect.init(x: 0, y: 0, width: frame.width, height: frame.height)
+        scroll.contentSize = CGSize.init(width: frame.width, height: frame.height)
         self.createPhotoViewerCollectionCell()
     }
     required init?(coder aDecoder: NSCoder) {
