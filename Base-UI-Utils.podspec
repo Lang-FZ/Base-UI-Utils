@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
 spec.name           = "Base-UI-Utils"
-spec.version        = "0.0.16"
+spec.version        = "0.0.17"
 spec.summary        = "方便快速搭建项目"
 
 spec.description    = <<-DESC
@@ -19,6 +19,7 @@ spec.requires_arc   = true
 spec.swift_version  =  ' 4.2 '
 spec.frameworks     = "UIKit"
 spec.default_subspec    = "Tools","BaseController","Extension"
+spec.static_framework = true
 
 spec.subspec 'Tools' do |a|
 a.ios.deployment_target = "9.0"
@@ -41,9 +42,7 @@ end
 spec.subspec 'PhotoViewer' do |a|
 a.ios.deployment_target = "9.0"
 a.source_files = "Base-UI-Utils/Module/PhotoViewer/{Controller,Model,View}/*.swift"
-a.dependency "Base-UI-Utils/BaseController"
-a.dependency "Base-UI-Utils/Extension"
-a.dependency "Base-UI-Utils/Tools"
+a.dependency "Base-UI-Utils"
 a.dependency "SDWebImage"
 a.resource_bundles = {'PhotoViewer' => ['Base-UI-Utils/ImageSet/PhotoViewer/*']}
 end
