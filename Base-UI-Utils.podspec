@@ -41,7 +41,8 @@ end
 spec.subspec 'PhotoViewer' do |a|
 a.ios.deployment_target = "9.0"
 a.source_files = "Base-UI-Utils/Module/PhotoViewer/{Controller,Model,View}/*.swift"
-a.dependency "Kingfisher","Base-UI-Utils/Tools"
+a.dependency "Kingfisher"
+a.dependency "Base-UI-Utils/Tools"
 a.resource_bundles = {'PhotoViewer' => ['Resource/Base-UI-Utils/ImageSet/PhotoViewer/*']}
 end
 
