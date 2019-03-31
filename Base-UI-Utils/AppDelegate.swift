@@ -7,6 +7,7 @@
 //
 
 import UIKit
+@_exported import SDWebImage
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

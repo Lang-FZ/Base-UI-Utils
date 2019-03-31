@@ -12,9 +12,20 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.view.backgroundColor = UIColor.cyan
     }
-
-
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        let touch:UITouch = (((touches as NSSet).anyObject() as AnyObject) as! UITouch)
+        
+        let photoModel = PhotoViewerPhotoModel.init()
+        photoModel.testModel()
+        
+        let photoVC:PhotoViewerController = PhotoViewerController()
+        photoVC.data = photoModel
+        photoVC.modalPresentationStyle = UIModalPresentationStyle.custom
+        self.present(photoVC, animated: true, completion: nil)
+    }
 }
 

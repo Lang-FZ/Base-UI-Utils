@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
 spec.name           = "Base-UI-Utils"
-spec.version        = "0.0.14"
+spec.version        = "0.0.15"
 spec.summary        = "方便快速搭建项目"
 
 spec.description    = <<-DESC
@@ -36,6 +36,13 @@ spec.subspec 'Extension' do |a|
 a.ios.deployment_target = "9.0"
 a.source_files = "Base-UI-Utils/Extension/*.swift"
 a.dependency "Base-UI-Utils/Tools"
+end
+
+spec.subspec 'PhotoViewer' do |a|
+a.ios.deployment_target = "9.0"
+a.source_files = "Base-UI-Utils/Module/PhotoViewer/{Controller,Model,View}/*.swift"
+a.dependency "Kingfisher","Base-UI-Utils/Tools"
+a.resource_bundles = {'PhotoViewer' => ['Resource/Base-UI-Utils/ImageSet/PhotoViewer/*']}
 end
 
 end
