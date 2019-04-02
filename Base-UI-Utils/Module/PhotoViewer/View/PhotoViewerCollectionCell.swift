@@ -11,7 +11,7 @@ import SDWebImage
 
 // MARK: - PhotoViewerCollectionCell
 
-class PhotoViewerCollectionCell: UICollectionViewCell {
+open class PhotoViewerCollectionCell: UICollectionViewCell {
 
     public var item_dismiss:(() -> ())?
     private var pan_start_point:CGPoint = CGPoint.zero
@@ -86,13 +86,13 @@ class PhotoViewerCollectionCell: UICollectionViewCell {
     
     
     // MARK: - 初始化
-    override init(frame: CGRect) {
+    override open init(frame: CGRect) {
         super.init(frame: frame)
         scroll.frame = CGRect.init(x: 0, y: 0, width: frame.width, height: frame.height)
         scroll.contentSize = CGSize.init(width: frame.width, height: frame.height)
         self.createPhotoViewerCollectionCell()
     }
-    required init?(coder aDecoder: NSCoder) {
+    required open init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -207,10 +207,10 @@ extension PhotoViewerCollectionCell {
 
 extension PhotoViewerCollectionCell:UIScrollViewDelegate {
     
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+    open func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.image
     }
-    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+    open func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
 //        print_debug("\(scrollView.contentSize)")
     }
 }

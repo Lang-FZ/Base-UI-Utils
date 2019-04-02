@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: -
 @objcMembers
-class PhotoViewerPhotoModel: NSObject {
+open class PhotoViewerPhotoModel: NSObject {
     
     /** 属性 */
     var photoData:[PhotoViewerPhotoModel] = []
@@ -18,7 +18,7 @@ class PhotoViewerPhotoModel: NSObject {
     var photoName:String = ""
     var photoUrl:URL?
     
-    override init() {
+    override open init() {
         super.init()
     }
 }

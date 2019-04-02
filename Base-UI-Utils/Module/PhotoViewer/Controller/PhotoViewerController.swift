@@ -10,7 +10,7 @@ import UIKit
 
 fileprivate let photoCellIdentifier = "photoCellIdentifier"
 
-class PhotoViewerController: NoneNaviBarController {
+open class PhotoViewerController: NoneNaviBarController {
 
     // MARK: - setModel
     public var data: PhotoViewerPhotoModel = PhotoViewerPhotoModel.init() {
@@ -41,7 +41,7 @@ class PhotoViewerController: NoneNaviBarController {
         return photoCollection
     }()
     
-    override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.clear
 
@@ -54,15 +54,15 @@ class PhotoViewerController: NoneNaviBarController {
 
 extension PhotoViewerController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    open func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.photoData.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoCellIdentifier, for: indexPath) as? PhotoViewerCollectionCell
         
