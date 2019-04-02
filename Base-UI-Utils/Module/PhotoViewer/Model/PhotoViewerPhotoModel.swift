@@ -13,10 +13,10 @@ import UIKit
 open class PhotoViewerPhotoModel: NSObject {
     
     /** 属性 */
-    var photoData:[PhotoViewerPhotoModel] = []
+    public var photoData:[PhotoViewerPhotoModel] = []
     
-    var photoName:String = ""
-    var photoUrl:URL?
+    public var photoName:String = ""
+    public var photoUrl:URL?
     
     override public init() {
         super.init()
