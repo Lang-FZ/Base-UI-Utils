@@ -142,9 +142,17 @@
 		5E191A9F224F0B250054312A /* PhotoViewer */ = {
 			isa = PBXGroup;
 			children = (
+				5E191AA6224F0B310054312A /* bizhi1.jpg */,
 				5E191AA9224F0B310054312A /* bizhi2.jpg */,
+				5E191AA4224F0B310054312A /* bizhi3.jpg */,
+				5E191AA7224F0B310054312A /* bizhi4.jpg */,
+				5E191AA8224F0B310054312A /* bizhi5.jpg */,
 				5E191AA0224F0B300054312A /* bizhi6.jpg */,
+				5E191AA2224F0B300054312A /* bizhi7.jpg */,
+				5E191AA1224F0B300054312A /* bizhi8.jpg */,
+				5E191AA3224F0B300054312A /* bizhi9.jpg */,
 				5E191AA5224F0B310054312A /* bizhi10.jpg */,
+				5E191AAA224F0B310054312A /* bizhi11.jpg */,
 			);
 			path = PhotoViewer;
 			sourceTree = "<group>";
@@ -152,14 +160,6 @@
 		5E31E0B42250BE4B003AEE73 /* Set */ = {
 			isa = PBXGroup;
 			children = (
-				5E191AA6224F0B310054312A /* bizhi1.jpg */,
-				5E191AA4224F0B310054312A /* bizhi3.jpg */,
-				5E191AA7224F0B310054312A /* bizhi4.jpg */,
-				5E191AA8224F0B310054312A /* bizhi5.jpg */,
-				5E191AA2224F0B300054312A /* bizhi7.jpg */,
-				5E191AA1224F0B300054312A /* bizhi8.jpg */,
-				5E191AA3224F0B300054312A /* bizhi9.jpg */,
-				5E191AAA224F0B310054312A /* bizhi11.jpg */,
 			);
 			path = Set;
 			sourceTree = "<group>";
