@@ -18,7 +18,7 @@ open class PhotoViewerPhotoModel: NSObject {
     var photoName:String = ""
     var photoUrl:URL?
     
-    override open init() {
+    override public init() {
         super.init()
     }
 }

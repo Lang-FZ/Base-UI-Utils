@@ -86,13 +86,13 @@ open class PhotoViewerCollectionCell: UICollectionViewCell {
     
     
     // MARK: - 初始化
-    override open init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         scroll.frame = CGRect.init(x: 0, y: 0, width: frame.width, height: frame.height)
         scroll.contentSize = CGSize.init(width: frame.width, height: frame.height)
         self.createPhotoViewerCollectionCell()
     }
-    required open init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
