@@ -29,7 +29,7 @@ open class PhotoViewerCollectionCell: UICollectionViewCell {
                 
                 let temp_image = UIImage.init(named: model.photoName)
                 image.image = temp_image
-                let temp_size = self.calculate_image_size(temp_image?.size ?? CGSize.zero)
+                let temp_size = self.calculate_image_size(temp_image?.size ?? CGSize.init(width: 1, height: 1))
                 self.refresh_image_size(temp_size)
                 
             } else if model.photoUrl != nil {
@@ -38,7 +38,7 @@ open class PhotoViewerCollectionCell: UICollectionViewCell {
                 image.sd_setImage(with: model.photoUrl) { (url_image, error, cacheType, url) in
                     self.loading.stopAnimating()
                     
-                    let temp_size = self.calculate_image_size(url_image?.size ?? CGSize.zero)
+                    let temp_size = self.calculate_image_size(url_image?.size ?? CGSize.init(width: 1, height: 1))
                     self.refresh_image_size(temp_size)
                 }
             }

@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
 spec.name           = "Base-UI-Utils"
-spec.version        = "0.0.23"
+spec.version        = "0.0.24"
 spec.summary        = "方便快速搭建项目"
 
 spec.description    = <<-DESC
@@ -46,7 +46,7 @@ a.dependency "Base-UI-Utils/BaseController"
 a.dependency "Base-UI-Utils/Extension"
 a.dependency "Base-UI-Utils/Tools"
 a.dependency "SDWebImage"
-a.resource_bundles = {'PhotoViewer' => ['Base-UI-Utils/ImageSet/PhotoViewer/*']}
+#a.resource_bundles = {'PhotoViewer' => ['Base-UI-Utils/ImageSet/PhotoViewer/*']}
 end
 
 end
