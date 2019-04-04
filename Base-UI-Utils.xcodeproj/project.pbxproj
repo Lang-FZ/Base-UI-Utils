@@ -21,6 +21,8 @@
 		5E191AB7224F31FB0054312A /* PhotoViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E191AB6224F31FB0054312A /* PhotoViewerController.swift */; };
 		5E191AB9224F32260054312A /* PhotoViewerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E191AB8224F32260054312A /* PhotoViewerCollectionCell.swift */; };
 		5E191ABB224F3D0D0054312A /* PhotoViewerPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E191ABA224F3D0D0054312A /* PhotoViewerPhotoModel.swift */; };
+		5E47B03D22560A4E006BE7DF /* CyclePageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E47B03C22560A4E006BE7DF /* CyclePageController.swift */; };
+		5E47B04022560AEE006BE7DF /* CyclePageCoverFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E47B03F22560AEE006BE7DF /* CyclePageCoverFlow.swift */; };
 		5EAA6D60224AA1C1000937B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA6D5F224AA1C1000937B9 /* AppDelegate.swift */; };
 		5EAA6D62224AA1C1000937B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA6D61224AA1C1000937B9 /* ViewController.swift */; };
 		5EAA6D65224AA1C1000937B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EAA6D63224AA1C1000937B9 /* Main.storyboard */; };
@@ -51,6 +53,8 @@
 		5E191AB6224F31FB0054312A /* PhotoViewerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerController.swift; sourceTree = "<group>"; };
 		5E191AB8224F32260054312A /* PhotoViewerCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerCollectionCell.swift; sourceTree = "<group>"; };
 		5E191ABA224F3D0D0054312A /* PhotoViewerPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerPhotoModel.swift; sourceTree = "<group>"; };
+		5E47B03C22560A4E006BE7DF /* CyclePageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePageController.swift; sourceTree = "<group>"; };
+		5E47B03F22560AEE006BE7DF /* CyclePageCoverFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePageCoverFlow.swift; sourceTree = "<group>"; };
 		5EAA6D5C224AA1C1000937B9 /* Base-UI-Utils.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Base-UI-Utils.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EAA6D5F224AA1C1000937B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EAA6D61224AA1C1000937B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +95,7 @@
 		5E191A99224F0B000054312A /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				5E47B0382255BA3D006BE7DF /* CyclePageView */,
 				5E191A9A224F0B000054312A /* PhotoViewer */,
 			);
 			path = Module;
@@ -163,6 +168,48 @@
 			);
 			path = Set;
 			sourceTree = "<group>";
+		};
+		5E47B0382255BA3D006BE7DF /* CyclePageView */ = {
+			isa = PBXGroup;
+			children = (
+				5E47B0392255BA3D006BE7DF /* Controller */,
+				5E47B03A2255BA3D006BE7DF /* Model */,
+				5E47B03B2255BA3D006BE7DF /* View */,
+				5E47B03E22560A7F006BE7DF /* FlowLayout */,
+			);
+			path = CyclePageView;
+			sourceTree = "<group>";
+		};
+		5E47B0392255BA3D006BE7DF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5E47B03C22560A4E006BE7DF /* CyclePageController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5E47B03A2255BA3D006BE7DF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5E47B03B2255BA3D006BE7DF /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5E47B03E22560A7F006BE7DF /* FlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				5E47B03F22560AEE006BE7DF /* CyclePageCoverFlow.swift */,
+			);
+			name = FlowLayout;
+			path = "Base-UI-Utils/Module/CyclePageView/FlowLayout";
+			sourceTree = SOURCE_ROOT;
 		};
 		5EAA6D53224AA1C1000937B9 = {
 			isa = PBXGroup;
@@ -349,6 +396,8 @@
 				5E191AB9224F32260054312A /* PhotoViewerCollectionCell.swift in Sources */,
 				5EAA6D7A224AA2B1000937B9 /* Extension+UIFont.swift in Sources */,
 				5EAA6D7D224AA2B1000937B9 /* BaseTabBarController.swift in Sources */,
+				5E47B03D22560A4E006BE7DF /* CyclePageController.swift in Sources */,
+				5E47B04022560AEE006BE7DF /* CyclePageCoverFlow.swift in Sources */,
 				5EAA6D60224AA1C1000937B9 /* AppDelegate.swift in Sources */,
 				5E191AB7224F31FB0054312A /* PhotoViewerController.swift in Sources */,
 				5EAA6D7C224AA2B1000937B9 /* Define.swift in Sources */,

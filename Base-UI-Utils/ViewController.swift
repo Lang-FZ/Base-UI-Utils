@@ -18,6 +18,16 @@ class ViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        let touch:UITouch = (((touches as NSSet).anyObject() as AnyObject) as! UITouch)
         
+//        testPhotoViewer()
+        testCyclePage()
+    }
+    
+    private func testCyclePage() {
+        
+        
+    }
+    private func testPhotoViewer() {
+        
         let photoModel = PhotoViewerPhotoModel.init()
         
         let url1 = PhotoViewerPhotoModel()
