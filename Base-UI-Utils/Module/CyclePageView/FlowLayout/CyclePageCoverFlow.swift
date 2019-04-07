@@ -27,7 +27,8 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
         
         self.scrollDirection = UICollectionView.ScrollDirection.horizontal
         // 决定第一张图片所在的位置
-        self.collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: (collectionView?.frame.width ?? 0)*(1-0.627)/2, bottom: 0, right: (collectionView?.frame.width ?? 0)*(1-0.627)/2)
+        self.collectionView?.contentInset = UIEdgeInsets.zero
+//        self.collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: (collectionView?.frame.width ?? 0)*(1-0.627)/2, bottom: 0, right: (collectionView?.frame.width ?? 0)*(1-0.627)/2)
     }
     /// 作用：决定cell的排布方式（frame等）
     ///

@@ -8,7 +8,15 @@
 
 import UIKit
 
+let FlowLayout_CoverFlow_Identifier = "FlowLayout_CoverFlow_Identifier"
+
 class CyclePageController: NoneNaviBarController {
+    
+    public var data: PhotoViewerPhotoModel = PhotoViewerPhotoModel.init() {
+        didSet {
+            cycle_page.reloadData()
+        }
+    }
     
     // MARK: - 懒加载
     private lazy var coverFlow: CyclePageCoverFlow = {
@@ -23,7 +31,7 @@ class CyclePageController: NoneNaviBarController {
     
     private lazy var cycle_page: UICollectionView = {
         
-        let cycle_page = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: coverFlow)
+        let cycle_page = UICollectionView.init(frame: CGRect.init(x: 0, y: 200, width: kScreenW, height: frameMath(140)), collectionViewLayout: coverFlow)
         cycle_page.backgroundColor = UIColor.clear
         cycle_page.showsVerticalScrollIndicator = false
         cycle_page.showsHorizontalScrollIndicator = false
@@ -31,7 +39,7 @@ class CyclePageController: NoneNaviBarController {
         cycle_page.dataSource = self
         cycle_page.isPagingEnabled = true
         
-//        cycle_page.register(CycleCyclePageItem.self, forCellWithReuseIdentifier: CycleCyclePageItem_Idenfitier)
+        cycle_page.register(CyclePageCollectionCell.self, forCellWithReuseIdentifier: FlowLayout_CoverFlow_Identifier)
         
         return cycle_page
     }()
@@ -47,18 +55,38 @@ class CyclePageController: NoneNaviBarController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch:UITouch = (((touches as NSSet).anyObject() as AnyObject) as! UITouch)
+        
+        if touch.view == self.view {
+            self.dismiss(animated: true, completion: nil)
+        } else if touch.view == cycle_page {
+            clickCollectionView()
+        }
+    }
+    func clickCollectionView() {
+        print_debug("cycle_page")
+    }
 }
 
 // MARK: - tableView 代理 数据源
 extension CyclePageController: UICollectionViewDelegate,UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 0
+        return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return data.photoData.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell.init()
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FlowLayout_CoverFlow_Identifier, for: indexPath) as? CyclePageCollectionCell
+        
+        cell?.model = data.photoData[indexPath.item]
+        
+        return cell!
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        clickCollectionView()
     }
 }
