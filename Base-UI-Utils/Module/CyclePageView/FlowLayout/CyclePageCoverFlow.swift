@@ -50,13 +50,45 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
         
         for attributes in layout_arr {
 
-//            let item_width = (collectionView?.frame.size.width ?? 0) - (collectionView?.contentInset.left ?? 0) - coverFlow_between_cycle
-//            let center_x = item_width / 2
-//            let step = abs(center_x - (attributes.center.x - (collectionView?.contentOffset.x ?? 0)))
-//            print("step \(step) : attX \(attributes.center.x) - offset \(collectionView?.contentOffset.x ?? 0)")
-//            let scale = fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))
-//
-//            attributes.transform = CGAffineTransform.init(scaleX: CGFloat(scale), y: CGFloat(scale))
+            // cell 宽度
+            let item_width = (collectionView?.frame.size.width ?? 0) - (collectionView?.contentInset.left ?? 0)*2 + coverFlow_between_cycle
+            // cell 中心x
+            let center_x = item_width / 2
+            // 图片的中心x
+            let image_center_x = attributes.center.x - coverFlow_between_cycle/2
+            let relative_distance_x = image_center_x - (collectionView?.contentOffset.x ?? 0)
+            
+            // step 相对 中心显示位置的x距离   中心显示位置是图片的中心
+            var step:CGFloat = 0
+            var temp_left_offset_x:CGFloat = 0
+            
+            let temp_image_width = item_width-coverFlow_between_cycle
+            
+            if attributes.center.x < item_width {
+                
+                temp_left_offset_x = (collectionView?.contentOffset.x ?? 0) + (collectionView?.contentInset.left ?? 0)
+                step = (abs(temp_left_offset_x) > item_width ? item_width : abs(temp_left_offset_x))
+                
+            } else {
+                
+                if (temp_image_width/2 - attributes.center.x + (collectionView?.contentInset.left ?? 0)*2.5) + coverFlow_between_cycle/2 > 0 {
+                    //左侧的
+                    temp_left_offset_x = center_x - relative_distance_x - (collectionView?.contentInset.left ?? 0) + coverFlow_between_cycle/2
+                    step = (abs(temp_left_offset_x) > item_width ? item_width : abs(temp_left_offset_x))
+                    
+                } else {
+                    //右侧的
+                    temp_left_offset_x = center_x - relative_distance_x + (collectionView?.contentInset.left ?? 0) - coverFlow_between_cycle/2
+                    step = (abs(temp_left_offset_x) > item_width ? item_width : abs(temp_left_offset_x))
+                }
+            }
+            
+            // 缩放比例公式
+            let scale_x = CGFloat(fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))) / 5 + 4/5
+            let scale_y = CGFloat(fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))) * 0.53641458 + 2/3
+//            let scale = 1 - (step / item_width / 2)
+
+            attributes.transform = CGAffineTransform.init(scaleX: scale_x, y: scale_y)
         }
         
         return layout_arr

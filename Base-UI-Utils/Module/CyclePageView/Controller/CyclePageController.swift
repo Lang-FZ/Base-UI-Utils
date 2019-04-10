@@ -10,8 +10,8 @@ import UIKit
 
 let FlowLayout_CoverFlow_Identifier = "FlowLayout_CoverFlow_Identifier"
 
-let coverFlow_left_inset = NSObject.frameMath_static(50)
-let coverFlow_between_cycle = NSObject.frameMath_static(15)
+let coverFlow_left_inset = NSObject.frameMath_static(45)
+let coverFlow_between_cycle = NSObject.frameMath_static(0)
 
 class CyclePageController: NoneNaviBarController {
     
@@ -33,7 +33,7 @@ class CyclePageController: NoneNaviBarController {
     
     private lazy var cycle_page: UICollectionView = {
         
-        let cycle_page = UICollectionView.init(frame: CGRect.init(x: 0, y: 200, width: kScreenW, height: frameMath(140)), collectionViewLayout: coverFlow)
+        let cycle_page = UICollectionView.init(frame: CGRect.init(x: 0, y: 200, width: kScreenW, height: frameMath(150)), collectionViewLayout: coverFlow)
         cycle_page.backgroundColor = UIColor.clear
         cycle_page.showsVerticalScrollIndicator = false
         cycle_page.showsHorizontalScrollIndicator = false
@@ -42,7 +42,7 @@ class CyclePageController: NoneNaviBarController {
         cycle_page.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0.1)  //类似分页的减速效果
         
         cycle_page.contentInset = UIEdgeInsets.init(top: 0, left: coverFlow_left_inset, bottom: 0, right: coverFlow_left_inset - coverFlow_between_cycle)
-        coverFlow.itemSize = CGSize.init(width: cycle_page.frame.size.width - cycle_page.contentInset.left - (coverFlow_left_inset - coverFlow_between_cycle), height: frameMath(140))
+        coverFlow.itemSize = CGSize.init(width: cycle_page.frame.size.width - cycle_page.contentInset.left - (coverFlow_left_inset - coverFlow_between_cycle), height: cycle_page.bounds.size.height)
         cycle_page.register(CyclePageCollectionCell.self, forCellWithReuseIdentifier: FlowLayout_CoverFlow_Identifier)
         
         return cycle_page

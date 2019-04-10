@@ -68,7 +68,7 @@ extension CyclePageCollectionCell {
         addSubview(image)
         addSubview(loading)
         
-        backgroundColor = UIColor.init(red: CGFloat(Double.init(arc4random_uniform(255))/255.0), green: CGFloat(Double.init(arc4random_uniform(255))/255.0), blue: CGFloat(Double.init(arc4random_uniform(255))/255.0), alpha: 1)
+//        backgroundColor = UIColor.init(red: CGFloat(Double.init(arc4random_uniform(255))/255.0), green: CGFloat(Double.init(arc4random_uniform(255))/255.0), blue: CGFloat(Double.init(arc4random_uniform(255))/255.0), alpha: 1)
     }
 }
 
