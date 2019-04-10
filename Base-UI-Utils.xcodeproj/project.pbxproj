@@ -35,7 +35,7 @@
 		5EAA6D7E224AA2B1000937B9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA6D78224AA2B1000937B9 /* BaseViewController.swift */; };
 		5EAA6D7F224AA2B1000937B9 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA6D79224AA2B1000937B9 /* BaseNavigationController.swift */; };
 		A7ED2C4CC67F7716176D3050 /* libPods-Base-UI-Utils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19ACF177CE56FC25EA784A96 /* libPods-Base-UI-Utils.a */; };
-		CFB2FFD5225A4F6600CAFE30 /* CyclePageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB2FFD4225A4F6600CAFE30 /* CyclePageCollectionCell.swift */; };
+		CF4A1639225DC90800461211 /* CyclePageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4A1638225DC90800461211 /* CyclePageCollectionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,7 +70,7 @@
 		5EAA6D78224AA2B1000937B9 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		5EAA6D79224AA2B1000937B9 /* BaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		B5392FF69C7A7F587CD06868 /* Pods-Base-UI-Utils.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Base-UI-Utils.release.xcconfig"; path = "Target Support Files/Pods-Base-UI-Utils/Pods-Base-UI-Utils.release.xcconfig"; sourceTree = "<group>"; };
-		CFB2FFD4225A4F6600CAFE30 /* CyclePageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CyclePageCollectionCell.swift; path = ../../../../../Documents/CyclePageCollectionCell.swift; sourceTree = "<group>"; };
+		CF4A1638225DC90800461211 /* CyclePageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CyclePageCollectionCell.swift; sourceTree = "<group>"; };
 		D4DA4399EDCF3E83C4AAC11F /* Pods-Base-UI-Utils.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Base-UI-Utils.debug.xcconfig"; path = "Target Support Files/Pods-Base-UI-Utils/Pods-Base-UI-Utils.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -200,7 +200,7 @@
 		5E47B03B2255BA3D006BE7DF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CFB2FFD4225A4F6600CAFE30 /* CyclePageCollectionCell.swift */,
+				CF4A1638225DC90800461211 /* CyclePageCollectionCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -405,7 +405,7 @@
 				5E191AB7224F31FB0054312A /* PhotoViewerController.swift in Sources */,
 				5EAA6D7C224AA2B1000937B9 /* Define.swift in Sources */,
 				5EAA6D7E224AA2B1000937B9 /* BaseViewController.swift in Sources */,
-				CFB2FFD5225A4F6600CAFE30 /* CyclePageCollectionCell.swift in Sources */,
+				CF4A1639225DC90800461211 /* CyclePageCollectionCell.swift in Sources */,
 				5EAA6D7B224AA2B1000937B9 /* Extension+UIColor.swift in Sources */,
 				5E191ABB224F3D0D0054312A /* PhotoViewerPhotoModel.swift in Sources */,
 			);
