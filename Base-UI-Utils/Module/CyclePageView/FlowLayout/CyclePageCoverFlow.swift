@@ -27,7 +27,7 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
         
         self.scrollDirection = UICollectionView.ScrollDirection.horizontal
         // 决定第一张图片所在的位置
-        self.collectionView?.contentInset = UIEdgeInsets.zero
+//        self.collectionView?.contentInset = UIEdgeInsets.zero
 //        self.collectionView?.contentInset = UIEdgeInsets.init(top: 0, left: (collectionView?.frame.width ?? 0)*(1-0.627)/2, bottom: 0, right: (collectionView?.frame.width ?? 0)*(1-0.627)/2)
     }
     /// 作用：决定cell的排布方式（frame等）
@@ -49,13 +49,14 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
         let layout_arr:[UICollectionViewLayoutAttributes] = NSArray.init(array: NSArray.init(array: super.layoutAttributesForElements(in: rect) ?? []) as? [Any] ?? [], copyItems: true) as? [UICollectionViewLayoutAttributes] ?? []
         
         for attributes in layout_arr {
-            
-            let center_x = collectionView?.center.x ?? 0
-            let step = abs(center_x - (attributes.center.x - (collectionView?.contentOffset.x ?? 0)))
-            print("step \(step) : attX \(attributes.center.x) - offset \(collectionView?.contentOffset.x ?? 0)")
-            let scale = fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))
-            
-            attributes.transform = CGAffineTransform.init(scaleX: CGFloat(scale), y: CGFloat(scale))
+
+//            let item_width = (collectionView?.frame.size.width ?? 0) - (collectionView?.contentInset.left ?? 0) - coverFlow_between_cycle
+//            let center_x = item_width / 2
+//            let step = abs(center_x - (attributes.center.x - (collectionView?.contentOffset.x ?? 0)))
+//            print("step \(step) : attX \(attributes.center.x) - offset \(collectionView?.contentOffset.x ?? 0)")
+//            let scale = fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))
+//
+//            attributes.transform = CGAffineTransform.init(scaleX: CGFloat(scale), y: CGFloat(scale))
         }
         
         return layout_arr
@@ -86,7 +87,9 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
         // 获得 super 已经计算好的布局的属性
         let attributes_arr = super.layoutAttributesForElements(in: rect) ?? []
         
-        let center_x = proposedContentOffset.x + (collectionView?.frame.width ?? 0) * 0.5
+        let item_width = (collectionView?.frame.size.width ?? 0) - (collectionView?.contentInset.left ?? 0) - (coverFlow_left_inset - coverFlow_between_cycle)
+        let center_x = proposedContentOffset.x + (item_width/2 + (collectionView?.contentInset.left ?? 0))
+        
         var min_delta = CGFloat.greatestFiniteMagnitude
         
         for attributes in attributes_arr {
