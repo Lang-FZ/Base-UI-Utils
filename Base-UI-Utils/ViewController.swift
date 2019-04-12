@@ -24,37 +24,37 @@ class ViewController: UIViewController {
     
     private func testCyclePage() {
         
-        let photoModel = PhotoViewerPhotoModel.init()
+        let photoModel = CyclePagePhotoModel.init()
         
-        let url1 = PhotoViewerPhotoModel()
+        let url1 = CyclePagePhotoModel()
         url1.photoUrl = URL.init(string: "http://img.netbian.com/file/2019/0312/e70d8c660d7321b25096cb7247f9a11a.jpg")
         photoModel.photoData.append(url1)
         
-        let model2 = PhotoViewerPhotoModel()
+        let model2 = CyclePagePhotoModel()
         model2.photoName = "bizhi2.jpg"
         photoModel.photoData.append(model2)
         
-        let model3 = PhotoViewerPhotoModel()
+        let model3 = CyclePagePhotoModel()
         model3.photoName = "bizhi3.jpg"
         photoModel.photoData.append(model3)
         
-        let model4 = PhotoViewerPhotoModel()
+        let model4 = CyclePagePhotoModel()
         model4.photoName = "bizhi4.jpg"
         photoModel.photoData.append(model4)
         
-        let model5 = PhotoViewerPhotoModel()
+        let model5 = CyclePagePhotoModel()
         model5.photoName = "bizhi5.jpg"
-        model5.photoData.append(model5)
+        photoModel.photoData.append(model5)
         
-        let model6 = PhotoViewerPhotoModel()
+        let model6 = CyclePagePhotoModel()
         model6.photoName = "bizhi6.jpg"
         photoModel.photoData.append(model6)
         
-        let model7 = PhotoViewerPhotoModel()
+        let model7 = CyclePagePhotoModel()
         model7.photoName = "bizhi7.jpg"
         photoModel.photoData.append(model7)
         
-        let model10 = PhotoViewerPhotoModel()
+        let model10 = CyclePagePhotoModel()
         model10.photoName = "bizhi10.jpg"
         photoModel.photoData.append(model10)
         

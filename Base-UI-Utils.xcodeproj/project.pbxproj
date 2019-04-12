@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E0C0E6622609E950029BAEC /* CyclePagePhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C0E6522609E950029BAEC /* CyclePagePhotoModel.swift */; };
 		5E191AAB224F0B310054312A /* bizhi6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E191AA0224F0B300054312A /* bizhi6.jpg */; };
 		5E191AAC224F0B310054312A /* bizhi8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E191AA1224F0B300054312A /* bizhi8.jpg */; };
 		5E191AAD224F0B310054312A /* bizhi7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E191AA2224F0B300054312A /* bizhi7.jpg */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		19ACF177CE56FC25EA784A96 /* libPods-Base-UI-Utils.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Base-UI-Utils.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E0C0E6522609E950029BAEC /* CyclePagePhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePagePhotoModel.swift; sourceTree = "<group>"; };
 		5E191AA0224F0B300054312A /* bizhi6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bizhi6.jpg; sourceTree = "<group>"; };
 		5E191AA1224F0B300054312A /* bizhi8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bizhi8.jpg; sourceTree = "<group>"; };
 		5E191AA2224F0B300054312A /* bizhi7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bizhi7.jpg; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 		5E47B03A2255BA3D006BE7DF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5E0C0E6522609E950029BAEC /* CyclePagePhotoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				5EAA6D7F224AA2B1000937B9 /* BaseNavigationController.swift in Sources */,
 				5EAA6D62224AA1C1000937B9 /* ViewController.swift in Sources */,
 				5E191AB9224F32260054312A /* PhotoViewerCollectionCell.swift in Sources */,
+				5E0C0E6622609E950029BAEC /* CyclePagePhotoModel.swift in Sources */,
 				5EAA6D7A224AA2B1000937B9 /* Extension+UIFont.swift in Sources */,
 				5EAA6D7D224AA2B1000937B9 /* BaseTabBarController.swift in Sources */,
 				5E47B03D22560A4E006BE7DF /* CyclePageController.swift in Sources */,

@@ -10,10 +10,10 @@ import UIKit
 
 class CyclePageCoverFlow: UICollectionViewFlowLayout {
     //https://blog.csdn.net/u013410274/article/details/79925531
-    override init() {
+    override public init() {
         super.init()
     }
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -22,7 +22,7 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
     
     /// 作用：在这个方法中做一些初始化操作
     /// 注意：子类重写prepareLayout，一定要调用[super prepareLayout]
-    override func prepare() {
+    override open func prepare() {
         super.prepare()
         
         self.scrollDirection = UICollectionView.ScrollDirection.horizontal
@@ -36,7 +36,7 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
     /// - Returns:  这个方法的返回值是个数组
     ///             这个数组中存放的都是UICollectionViewLayoutAttributes对象
     ///             UICollectionViewLayoutAttributes对象决定了cell的排布方式（frame等）
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
         var temp_rect = rect
         
@@ -100,7 +100,7 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
     ///             一旦重新刷新布局，就会按顺序调用下面的方法：
     ///                 prepare
     ///                 layoutAttributesForElementsInRect:
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
     /// 作用：返回值决定了collectionView停止滚动时最终的偏移量（contentOffset）
@@ -109,7 +109,7 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
     ///   - proposedContentOffset: 原本情况下，collectionView停止滚动时最终的偏移量
     ///   - velocity: 滚动速率，通过这个参数可以了解滚动的方向
     /// - Returns: 停止滚动时最终的偏移量
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+    override open func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         
         // 保证滚动结束后视图的显示效果
         

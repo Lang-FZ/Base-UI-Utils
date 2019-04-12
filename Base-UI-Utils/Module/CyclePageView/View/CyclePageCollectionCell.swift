@@ -14,7 +14,7 @@ import SDWebImage
 class CyclePageCollectionCell: UICollectionViewCell {
     
     // MARK: - 属性
-    lazy var image: UIImageView = {
+    private lazy var image: UIImageView = {
         let image = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: self.bounds.size.width-coverFlow_between_cycle, height: self.bounds.height))
         return image
     }()
@@ -27,7 +27,7 @@ class CyclePageCollectionCell: UICollectionViewCell {
     }()
     
     // MARK: - setModel
-    public var model: PhotoViewerPhotoModel = PhotoViewerPhotoModel.init() {
+    public var model: CyclePagePhotoModel = CyclePagePhotoModel.init() {
         didSet {
             
             image.image = UIImage.init(named: "")
@@ -51,11 +51,11 @@ class CyclePageCollectionCell: UICollectionViewCell {
     }
     
     // MARK: - 初始化
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         self.createCyclePageCollectionCell()
     }
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -67,8 +67,6 @@ extension CyclePageCollectionCell {
         
         addSubview(image)
         addSubview(loading)
-        
-//        backgroundColor = UIColor.init(red: CGFloat(Double.init(arc4random_uniform(255))/255.0), green: CGFloat(Double.init(arc4random_uniform(255))/255.0), blue: CGFloat(Double.init(arc4random_uniform(255))/255.0), alpha: 1)
     }
 }
 
