@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         photoModel.photoData.append(url1)
         
         let model2 = CyclePagePhotoModel()
-        model2.photoName = "bizhi2.jpg"
+        model2.photoName = "bizhi1.jpg"
         photoModel.photoData.append(model2)
         
         let model3 = CyclePagePhotoModel()
@@ -41,22 +41,6 @@ class ViewController: UIViewController {
         let model4 = CyclePagePhotoModel()
         model4.photoName = "bizhi4.jpg"
         photoModel.photoData.append(model4)
-        
-        let model5 = CyclePagePhotoModel()
-        model5.photoName = "bizhi5.jpg"
-        photoModel.photoData.append(model5)
-        
-        let model6 = CyclePagePhotoModel()
-        model6.photoName = "bizhi6.jpg"
-        photoModel.photoData.append(model6)
-        
-        let model7 = CyclePagePhotoModel()
-        model7.photoName = "bizhi7.jpg"
-        photoModel.photoData.append(model7)
-        
-        let model10 = CyclePagePhotoModel()
-        model10.photoName = "bizhi10.jpg"
-        photoModel.photoData.append(model10)
         
         let photoVC:CyclePageController = CyclePageController()
         photoVC.data = photoModel
