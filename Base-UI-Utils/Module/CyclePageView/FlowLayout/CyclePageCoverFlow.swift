@@ -71,7 +71,8 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
                 
             } else {
                 
-                if (temp_image_width/2 - attributes.center.x + (collectionView?.contentInset.left ?? 0)*2.5) + coverFlow_between_cycle/2 > 0 {
+                let temp_math = temp_image_width/2 - attributes.center.x + (collectionView?.contentInset.left ?? 0)*2.5
+                if temp_math + coverFlow_between_cycle/2 > 0 {
                     //左侧的
                     temp_left_offset_x = center_x - relative_distance_x - (collectionView?.contentInset.left ?? 0) + coverFlow_between_cycle/2
                     step = (abs(temp_left_offset_x) > item_width ? item_width : abs(temp_left_offset_x))
