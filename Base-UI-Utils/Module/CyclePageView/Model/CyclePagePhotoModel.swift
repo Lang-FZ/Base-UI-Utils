@@ -13,6 +13,8 @@ import UIKit
 open class CyclePagePhotoModel: NSObject {
     
     /** 属性 */
+    public var collection_width:CGFloat = 0
+    
     public var photoData:[CyclePagePhotoModel] = []
     
     public var photoName:String = ""

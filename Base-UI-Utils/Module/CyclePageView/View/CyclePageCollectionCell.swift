@@ -13,6 +13,8 @@ import SDWebImage
 
 class CyclePageCollectionCell: UICollectionViewCell {
     
+    private var cycle_style = CycleStyle.cover_flow
+    
     // MARK: - 属性
     private lazy var image: UIImageView = {
         let image = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: self.bounds.size.width-coverFlow_between_cycle, height: self.bounds.height))
@@ -47,6 +49,18 @@ class CyclePageCollectionCell: UICollectionViewCell {
                     self.loading.stopAnimating()
                 }
             }
+        }
+    }
+    
+    convenience public init(frame: CGRect, style:CycleStyle) {
+        self.init(frame: frame)
+        cycle_style = style
+        
+        switch style {
+        case .cover_flow:
+            image.frame = CGRect.init(x: 0, y: 0, width: self.bounds.size.width-coverFlow_between_cycle, height: self.bounds.height)
+        default:
+            image.frame = CGRect.init(x: 0, y: 0, width: self.bounds.size.width-coverFlow_between_cycle, height: self.bounds.height)
         }
     }
     

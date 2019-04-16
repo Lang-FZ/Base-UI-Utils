@@ -8,19 +8,22 @@
 
 import UIKit
 
-private let FlowLayout_CoverFlow_Identifier = "FlowLayout_CoverFlow_Identifier"
-
-public let coverFlow_left_inset = NSObject.frameMath_static(45)    //左侧 contentInset
-public let coverFlow_between_cycle = NSObject.frameMath_static(0)  //两个cell的显示内容 间距
+private let CyclePage_Identifier = "CyclePage_Identifier"
+private let CyclePage_waterfall_Identifier = "CyclePage_waterfall_Identifier"
 
 class CyclePageController: NoneNaviBarController {
     
+    private var cycle_style = CycleStyle.cover_flow     //显示类型
     private var isHadData:Bool = false      //已经赋值模型 可以触发 非初始化UI影响的 判断
     private var cycle_page_loop = false     //是否可循环
     
     public var is_page_loop = true          //外部控制可否循环
     public var current_page:Int = 0         //当前第几页
     public var before_after_add = 2         //可以循环时 前后各加几个
+    
+    private let collection_width = kScreenW_static
+    
+    public var item_size = CGSize.init(width: kScreenW_static - coverFlow_left_inset - (coverFlow_left_inset - coverFlow_between_cycle), height: frameMath_static(150))
     
     public var data: CyclePagePhotoModel = CyclePagePhotoModel.init() {
         didSet {
@@ -55,6 +58,7 @@ class CyclePageController: NoneNaviBarController {
     }
     
     // MARK: - 懒加载
+    // cover_flow
     private lazy var coverFlow: CyclePageCoverFlow = {
         let coverFlow = CyclePageCoverFlow.init()
         coverFlow.scrollDirection = .horizontal
@@ -64,23 +68,67 @@ class CyclePageController: NoneNaviBarController {
         coverFlow.itemSize = CGSize.init(width: kScreenW, height: 1)
         return coverFlow
     }()
+    // waterfall_flow
+    private lazy var waterfallFlow: CyclePageWaterfallFlow = {
+        let waterfallFlow = CyclePageWaterfallFlow.init()
+        waterfallFlow.scrollDirection = .vertical
+        waterfallFlow.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
+        waterfallFlow.minimumLineSpacing = waterfallFlow_between_line
+        waterfallFlow.minimumInteritemSpacing = waterfallFlow_between_interitem
+        waterfallFlow.itemSize = CGSize.init(width: kScreenW, height: 1)
+        return waterfallFlow
+    }()
     
     private lazy var cycle_page: UICollectionView = {
         
-        let cycle_page = UICollectionView.init(frame: CGRect.init(x: 0, y: 200, width: kScreenW, height: frameMath(150)), collectionViewLayout: coverFlow)
-        cycle_page.backgroundColor = UIColor.clear
-        cycle_page.showsVerticalScrollIndicator = false
-        cycle_page.showsHorizontalScrollIndicator = false
-        cycle_page.delegate = self
-        cycle_page.dataSource = self
-        cycle_page.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0.1)  //类似分页的减速效果
+        var flow_layout:UICollectionViewDelegateFlowLayout?
+        var cycle_page:UICollectionView?
         
-        cycle_page.contentInset = UIEdgeInsets.init(top: 0, left: coverFlow_left_inset, bottom: 0, right: coverFlow_left_inset - coverFlow_between_cycle)
-        coverFlow.itemSize = CGSize.init(width: cycle_page.frame.size.width - cycle_page.contentInset.left - (coverFlow_left_inset - coverFlow_between_cycle), height: cycle_page.bounds.size.height)
-        cycle_page.register(CyclePageCollectionCell.self, forCellWithReuseIdentifier: FlowLayout_CoverFlow_Identifier)
+        switch cycle_style {
+        case .cover_flow:
+            item_size = CGSize.init(width: kScreenW - coverFlow_left_inset - (coverFlow_left_inset - coverFlow_between_cycle), height: frameMath(150))
+            coverFlow.itemSize = item_size
+            flow_layout = coverFlow
+            
+            cycle_page = UICollectionView.init(frame: CGRect.init(x: 0, y: 200, width: collection_width, height: frameMath(150)), collectionViewLayout: flow_layout as! UICollectionViewLayout)
+            cycle_page?.register(CyclePageCollectionCell.self, forCellWithReuseIdentifier: CyclePage_Identifier)
+            
+        case .waterfall_flow:
+            waterfallFlow.estimatedItemSize = CGSize.init(width: (collection_width-waterfallFlow_inset_left_right*2-waterfallFlow_between_line*(waterfallFlow_section_count-1))/waterfallFlow_section_count, height: CGFloat.leastNormalMagnitude)
+            flow_layout = waterfallFlow
+            
+            cycle_page = UICollectionView.init(frame: CGRect.init(x: 0, y: 44, width: collection_width, height: kScreenH-44-39), collectionViewLayout: flow_layout as! UICollectionViewLayout)
+            cycle_page?.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier)
+        }
         
-        return cycle_page
+        cycle_page?.backgroundColor = UIColor.clear
+        cycle_page?.showsVerticalScrollIndicator = false
+        cycle_page?.showsHorizontalScrollIndicator = false
+        cycle_page?.delegate = self
+        cycle_page?.dataSource = self
+        cycle_page?.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0.1)  //类似分页的减速效果
+        
+        cycle_page?.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(dismissController)))
+        
+        switch cycle_style {
+        case .cover_flow:
+            cycle_page?.contentInset = UIEdgeInsets.init(top: 0, left: coverFlow_left_inset, bottom: 0, right: coverFlow_left_inset - coverFlow_between_cycle)
+        case .waterfall_flow:
+            cycle_page?.contentInset = UIEdgeInsets.init(top: waterfallFlow_inset_top_bottom, left: waterfallFlow_inset_left_right, bottom: waterfallFlow_inset_top_bottom, right: waterfallFlow_inset_left_right)
+        }
+        
+        
+        return cycle_page ?? UICollectionView.init()
     }()
+    
+    init(_ style:CycleStyle) {
+        super.init()
+        cycle_style = style
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - 系统方法
     override open func viewDidLoad() {
@@ -97,11 +145,14 @@ class CyclePageController: NoneNaviBarController {
         let touch:UITouch = (((touches as NSSet).anyObject() as AnyObject) as! UITouch)
         
         if touch.view == self.view {
-            self.dismiss(animated: true, completion: nil)
-        }
-//        else if touch.view == cycle_page {
+            dismissController()
+        } else if touch.view == cycle_page {
 //            clickCollectionView(current_page)
-//        }
+            dismissController()
+        }
+    }
+    @objc private func dismissController() {
+        self.dismiss(animated: true, completion: nil)
     }
     private func clickCollectionView(_ index:Int) {
         print_debug("page : \(index)")
@@ -119,11 +170,28 @@ extension CyclePageController: UICollectionViewDelegate,UICollectionViewDataSour
     }
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FlowLayout_CoverFlow_Identifier, for: indexPath) as? CyclePageCollectionCell
-        
-        cell?.model = data.photoData[indexPath.item]
-        
-        return cell!
+        switch cycle_style {
+        case .cover_flow:
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CyclePage_Identifier, for: indexPath) as? CyclePageCollectionCell
+            cell?.model = data.photoData[indexPath.item]
+            
+            return cell!
+            
+        case .waterfall_flow:
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CyclePage_waterfall_Identifier, for: indexPath) as? CyclePageWaterfallCell
+            
+            let model = data.photoData[indexPath.item]
+            model.collection_width = collection_width
+            cell?.model = model
+            
+            cell?.click_item = { [weak self] in
+                self?.clickCollectionView(indexPath.item)
+            }
+            
+            return cell!
+        }
     }
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -204,4 +272,9 @@ extension CyclePageController: UICollectionViewDelegate,UICollectionViewDataSour
             print_debug("current_index \(index)")
         }
     }
+}
+
+public enum CycleStyle {
+    case cover_flow
+    case waterfall_flow
 }

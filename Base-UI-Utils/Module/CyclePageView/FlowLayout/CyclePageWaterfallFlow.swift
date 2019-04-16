@@ -1,18 +1,21 @@
 //
-//  CyclePageCoverFlow.swift
+//  CyclePageWaterfallFlow.swift
 //  Base-UI-Utils
 //
-//  Created by LangFZ on 2019/4/4.
+//  Created by LangFZ on 2019/4/15.
 //  Copyright © 2019 LangFZ. All rights reserved.
 //
 
 import UIKit
 
-public let coverFlow_left_inset = NSObject.frameMath_static(45)    //左侧 contentInset
-public let coverFlow_between_cycle = NSObject.frameMath_static(0)  //两个cell的显示内容 间距
+public let waterfallFlow_section_count = NSObject.frameMath_static(3)       //一共几列
+public let waterfallFlow_between_line = NSObject.frameMath_static(5)        //最小行间距
+public let waterfallFlow_between_interitem = NSObject.frameMath_static(5)   //同一列中间隔的cell最小间距
+public let waterfallFlow_inset_left_right = NSObject.frameMath_static(10)   //inset 左右
+public let waterfallFlow_inset_top_bottom = NSObject.frameMath_static(5)    //inset 上下
 
-class CyclePageCoverFlow: UICollectionViewFlowLayout {
-    //https://blog.csdn.net/u013410274/article/details/79925531
+class CyclePageWaterfallFlow: UICollectionViewFlowLayout {
+    
     override public init() {
         super.init()
     }
@@ -21,13 +24,12 @@ class CyclePageCoverFlow: UICollectionViewFlowLayout {
     }
 }
 
-extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
+extension CyclePageWaterfallFlow:UICollectionViewDelegateFlowLayout {
     
     /// 作用：在这个方法中做一些初始化操作
     /// 注意：子类重写prepareLayout，一定要调用[super prepareLayout]
     override open func prepare() {
         super.prepare()
-        self.scrollDirection = UICollectionView.ScrollDirection.horizontal
     }
     /// 作用：决定cell的排布方式（frame等）
     ///
@@ -48,7 +50,7 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
         let layout_arr:[UICollectionViewLayoutAttributes] = NSArray.init(array: NSArray.init(array: super.layoutAttributesForElements(in: rect) ?? []) as? [Any] ?? [], copyItems: true) as? [UICollectionViewLayoutAttributes] ?? []
         
         for attributes in layout_arr {
-
+            
             // cell 宽度
             let item_width = (collectionView?.frame.size.width ?? 0) - (collectionView?.contentInset.left ?? 0)*2 + coverFlow_between_cycle
             // cell 中心x
@@ -70,8 +72,7 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
                 
             } else {
                 
-                let temp_math = temp_image_width/2 - attributes.center.x + (collectionView?.contentInset.left ?? 0)*2.5
-                if temp_math + coverFlow_between_cycle/2 > 0 {
+                if (temp_image_width/2 - attributes.center.x + (collectionView?.contentInset.left ?? 0)*2.5) + coverFlow_between_cycle/2 > 0 {
                     //左侧的
                     temp_left_offset_x = center_x - relative_distance_x - (collectionView?.contentInset.left ?? 0) + coverFlow_between_cycle/2
                     step = (abs(temp_left_offset_x) > item_width ? item_width : abs(temp_left_offset_x))
@@ -86,13 +87,23 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
             // 缩放比例公式
             let scale_x = CGFloat(fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))) / 5 + 4/5
             let scale_y = CGFloat(fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))) * 0.53641458 + 2/3
-//            let scale = 1 - (step / item_width / 2)
-
+            //            let scale = 1 - (step / item_width / 2)
+            
             attributes.transform = CGAffineTransform.init(scaleX: scale_x, y: scale_y)
         }
         
         return layout_arr
     }
+    
+    /** 返回indexPath位置cell对应的布局属性*/
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return nil
+    }
+    /** 返回indexPath位置头和脚视图对应的布局属性*/
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return nil
+    }
+    
     /// 作用：如果返回YES，那么collectionView显示的范围发生改变时，就会重新刷新布局
     ///
     /// - Parameter newBounds:
@@ -133,4 +144,3 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
         return CGPoint.init(x: proposedContentOffset.x + min_delta, y: proposedContentOffset.y)
     }
 }
-

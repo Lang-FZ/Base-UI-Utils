@@ -22,6 +22,8 @@
 		5E191AB7224F31FB0054312A /* PhotoViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E191AB6224F31FB0054312A /* PhotoViewerController.swift */; };
 		5E191AB9224F32260054312A /* PhotoViewerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E191AB8224F32260054312A /* PhotoViewerCollectionCell.swift */; };
 		5E191ABB224F3D0D0054312A /* PhotoViewerPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E191ABA224F3D0D0054312A /* PhotoViewerPhotoModel.swift */; };
+		5E33660C2265EDAB00607DE8 /* CyclePageWaterfallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33660B2265EDAB00607DE8 /* CyclePageWaterfallCell.swift */; };
+		5E36BF0C22647B55002CA2B1 /* CyclePageWaterfallFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E36BF0B22647B55002CA2B1 /* CyclePageWaterfallFlow.swift */; };
 		5E47B03D22560A4E006BE7DF /* CyclePageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E47B03C22560A4E006BE7DF /* CyclePageController.swift */; };
 		5E47B04022560AEE006BE7DF /* CyclePageCoverFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E47B03F22560AEE006BE7DF /* CyclePageCoverFlow.swift */; };
 		5EAA6D60224AA1C1000937B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA6D5F224AA1C1000937B9 /* AppDelegate.swift */; };
@@ -56,6 +58,8 @@
 		5E191AB6224F31FB0054312A /* PhotoViewerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerController.swift; sourceTree = "<group>"; };
 		5E191AB8224F32260054312A /* PhotoViewerCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerCollectionCell.swift; sourceTree = "<group>"; };
 		5E191ABA224F3D0D0054312A /* PhotoViewerPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerPhotoModel.swift; sourceTree = "<group>"; };
+		5E33660B2265EDAB00607DE8 /* CyclePageWaterfallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePageWaterfallCell.swift; sourceTree = "<group>"; };
+		5E36BF0B22647B55002CA2B1 /* CyclePageWaterfallFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePageWaterfallFlow.swift; sourceTree = "<group>"; };
 		5E47B03C22560A4E006BE7DF /* CyclePageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePageController.swift; sourceTree = "<group>"; };
 		5E47B03F22560AEE006BE7DF /* CyclePageCoverFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclePageCoverFlow.swift; sourceTree = "<group>"; };
 		5EAA6D5C224AA1C1000937B9 /* Base-UI-Utils.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Base-UI-Utils.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -212,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				CF4A1638225DC90800461211 /* CyclePageCollectionCell.swift */,
+				5E33660B2265EDAB00607DE8 /* CyclePageWaterfallCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -220,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				5E47B03F22560AEE006BE7DF /* CyclePageCoverFlow.swift */,
+				5E36BF0B22647B55002CA2B1 /* CyclePageWaterfallFlow.swift */,
 			);
 			name = FlowLayout;
 			path = "Base-UI-Utils/Module/CyclePageView/FlowLayout";
@@ -405,6 +411,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E33660C2265EDAB00607DE8 /* CyclePageWaterfallCell.swift in Sources */,
 				5EAA6D7F224AA2B1000937B9 /* BaseNavigationController.swift in Sources */,
 				5EAA6D62224AA1C1000937B9 /* ViewController.swift in Sources */,
 				5E191AB9224F32260054312A /* PhotoViewerCollectionCell.swift in Sources */,
@@ -419,6 +426,7 @@
 				5EAA6D7E224AA2B1000937B9 /* BaseViewController.swift in Sources */,
 				CF4A1639225DC90800461211 /* CyclePageCollectionCell.swift in Sources */,
 				5EAA6D7B224AA2B1000937B9 /* Extension+UIColor.swift in Sources */,
+				5E36BF0C22647B55002CA2B1 /* CyclePageWaterfallFlow.swift in Sources */,
 				5E191ABB224F3D0D0054312A /* PhotoViewerPhotoModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
