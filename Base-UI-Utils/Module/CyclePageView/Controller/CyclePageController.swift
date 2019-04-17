@@ -75,7 +75,7 @@ class CyclePageController: NoneNaviBarController {
         waterfallFlow.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
         waterfallFlow.minimumLineSpacing = waterfallFlow_between_line
         waterfallFlow.minimumInteritemSpacing = waterfallFlow_between_interitem
-        waterfallFlow.itemSize = CGSize.init(width: kScreenW, height: 1)
+        waterfallFlow.estimatedItemSize = CGSize.init(width: kScreenW-waterfallFlow_inset_left_right*2, height: 1)
         return waterfallFlow
     }()
     
@@ -94,7 +94,8 @@ class CyclePageController: NoneNaviBarController {
             cycle_page?.register(CyclePageCollectionCell.self, forCellWithReuseIdentifier: CyclePage_Identifier)
             
         case .waterfall_flow:
-            waterfallFlow.estimatedItemSize = CGSize.init(width: (collection_width-waterfallFlow_inset_left_right*2-waterfallFlow_between_line*(waterfallFlow_section_count-1))/waterfallFlow_section_count, height: CGFloat.leastNormalMagnitude)
+            is_page_loop = false
+            waterfallFlow.estimatedItemSize = CGSize.init(width: (collection_width-waterfallFlow_inset_left_right*2-waterfallFlow_between_line*CGFloat.init(waterfallFlow_section_count-1))/CGFloat(waterfallFlow_section_count), height: CGFloat.leastNormalMagnitude)
             flow_layout = waterfallFlow
             
             cycle_page = UICollectionView.init(frame: CGRect.init(x: 0, y: 44, width: collection_width, height: kScreenH-44-39), collectionViewLayout: flow_layout as! UICollectionViewLayout)
@@ -114,7 +115,7 @@ class CyclePageController: NoneNaviBarController {
         case .cover_flow:
             cycle_page?.contentInset = UIEdgeInsets.init(top: 0, left: coverFlow_left_inset, bottom: 0, right: coverFlow_left_inset - coverFlow_between_cycle)
         case .waterfall_flow:
-            cycle_page?.contentInset = UIEdgeInsets.init(top: waterfallFlow_inset_top_bottom, left: waterfallFlow_inset_left_right, bottom: waterfallFlow_inset_top_bottom, right: waterfallFlow_inset_left_right)
+            cycle_page?.contentInset = UIEdgeInsets.init(top: waterfallFlow_inset_top_bottom, left: 0, bottom: waterfallFlow_inset_top_bottom, right: 0)
         }
         
         

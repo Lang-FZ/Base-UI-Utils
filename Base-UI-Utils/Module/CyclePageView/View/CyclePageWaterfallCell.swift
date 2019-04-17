@@ -28,32 +28,46 @@ class CyclePageWaterfallCell: UICollectionViewCell {
     var model: CyclePagePhotoModel = CyclePagePhotoModel.init() {
         didSet {
             
+            let temp_width = waterfallFlow_inset_left_right*CGFloat.init(2)+waterfallFlow_between_line*CGFloat.init(waterfallFlow_section_count-1)
+            let image_width = (model.collection_width-temp_width)/CGFloat.init(waterfallFlow_section_count)
+
             image.image = UIImage.init(named: "")
-            self.image.snp.updateConstraints({ (make) in
-                make.height.equalTo(0)
-            })
-            
-            let image_width = (model.collection_width-waterfallFlow_inset_left_right*2-waterfallFlow_between_line*(waterfallFlow_section_count-1))/waterfallFlow_section_count
             
             if model.photoName != "" {
+                
+                self.image.snp.updateConstraints({ (make) in
+                    make.width.equalTo(image_width)
+                    make.height.equalTo(0)
+                })
                 
                 DispatchQueue.global().async {
                     let temp_image = UIImage.init(named: self.model.photoName)
                     DispatchQueue.main.async {
                         self.image.image = temp_image
                         self.image.snp.updateConstraints({ (make) in
+                            make.width.equalTo(image_width)
                             make.height.equalTo(image_width/(temp_image?.size.width ?? 0)*(temp_image?.size.height ?? 0))
                         })
+                        self.setNeedsLayout()
+                        self.layoutIfNeeded()
                     }
                 }
             } else if model.photoUrl != nil {
+                
+                self.image.snp.updateConstraints({ (make) in
+                    make.width.equalTo(image_width)
+                    make.height.equalTo(20)
+                })
                 
                 loading.startAnimating()
                 image.sd_setImage(with: model.photoUrl) { (url_image, error, cacheType, url) in
                     self.loading.stopAnimating()
                     self.image.snp.updateConstraints({ (make) in
+                        make.width.equalTo(image_width)
                         make.height.equalTo(image_width/(url_image?.size.width ?? 0)*(url_image?.size.height ?? 0))
                     })
+                    self.setNeedsLayout()
+                    self.layoutIfNeeded()
                 }
             }
         }
@@ -82,14 +96,19 @@ extension CyclePageWaterfallCell {
         addSubview(image)
         addSubview(loading)
         
+        backgroundColor = UIColor.init(red: CGFloat(Double.init(arc4random_uniform(255))/255.0), green: CGFloat(Double.init(arc4random_uniform(255))/255.0), blue: CGFloat(Double.init(arc4random_uniform(255))/255.0), alpha: 1)
+        
         setup_UI()
+        self.layer.masksToBounds = true
     }
     // MARK: - 约束
     private func setup_UI() {
         
         image.snp.makeConstraints { (make) in
-            make.left.right.top.equalTo(self)
+            make.left.top.equalTo(self)
             make.height.equalTo(0)
+            make.width.equalTo(kScreenW)
+            make.right.equalTo(self.snp.right).priority(600)
             make.bottom.equalTo(self.snp.bottom).priority(600)
         }
     }

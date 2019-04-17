@@ -8,13 +8,28 @@
 
 import UIKit
 
-public let waterfallFlow_section_count = NSObject.frameMath_static(3)       //一共几列
+public let waterfallFlow_section_count = 3                                  //一共几列
 public let waterfallFlow_between_line = NSObject.frameMath_static(5)        //最小行间距
 public let waterfallFlow_between_interitem = NSObject.frameMath_static(5)   //同一列中间隔的cell最小间距
 public let waterfallFlow_inset_left_right = NSObject.frameMath_static(10)   //inset 左右
 public let waterfallFlow_inset_top_bottom = NSObject.frameMath_static(5)    //inset 上下
 
 class CyclePageWaterfallFlow: UICollectionViewFlowLayout {
+    
+    lazy private var column_width:CGFloat = {
+        let temp_column_all_width = (self.collectionView?.frame.size.width ?? 0) - waterfallFlow_inset_left_right*2
+        let column_all_width = temp_column_all_width - waterfallFlow_between_line*CGFloat.init(waterfallFlow_section_count-1)
+        let column_width = column_all_width/CGFloat.init(waterfallFlow_section_count)
+        return column_width
+    } ()
+    
+    lazy private var column_heights:[CGFloat] = {
+        var column_heights:[CGFloat] = []
+        for i in 0..<waterfallFlow_section_count {
+            column_heights.append(0)
+        }
+        return column_heights
+    } ()
     
     override public init() {
         super.init()
@@ -30,7 +45,34 @@ extension CyclePageWaterfallFlow:UICollectionViewDelegateFlowLayout {
     /// 注意：子类重写prepareLayout，一定要调用[super prepareLayout]
     override open func prepare() {
         super.prepare()
+        column_heights = []
+        for _ in 0..<waterfallFlow_section_count {
+            column_heights.append(0)
+        }
     }
+    
+    /// 返回indexPath位置cell对应的布局属性
+    ///
+    /// - Parameter indexPath: 位置
+    /// - Returns: 返回indexPath位置cell对应的布局属性
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        
+        let layout_arr:UICollectionViewLayoutAttributes? = super.layoutAttributesForItem(at: indexPath)
+        let shortest = column_heights.sorted(by: <).first ?? 0
+        let shortCol = NSArray.init(array: column_heights).index(of: shortest)
+        
+        let x = CGFloat.init(shortCol)*column_width+waterfallFlow_inset_left_right+waterfallFlow_between_line*CGFloat.init(shortCol)
+        let y = shortest + waterfallFlow_inset_top_bottom
+        
+        //获取cell高度
+        let height = 50+arc4random_uniform(50)
+        
+        layout_arr?.frame = CGRect.init(x: x, y: y, width: column_width, height: CGFloat(height))
+        column_heights[shortCol] = y + CGFloat(height)
+        
+        return layout_arr
+    }
+    
     /// 作用：决定cell的排布方式（frame等）
     ///
     /// - Parameter rect:
@@ -39,69 +81,21 @@ extension CyclePageWaterfallFlow:UICollectionViewDelegateFlowLayout {
     ///             UICollectionViewLayoutAttributes对象决定了cell的排布方式（frame等）
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
-        var temp_rect = rect
-        
-        // 闪屏现象解决参考 ：https://blog.csdn.net/u013282507/article/details/53103816
-        // 扩大控制范围，防止出现闪屏现象
-        temp_rect.size.width = temp_rect.size.width + (collectionView?.frame.width ?? 0)
-        temp_rect.origin.x = temp_rect.origin.x - (collectionView?.frame.width ?? 0 ) / 2
-        
-        // 让父类布局好样式
-        let layout_arr:[UICollectionViewLayoutAttributes] = NSArray.init(array: NSArray.init(array: super.layoutAttributesForElements(in: rect) ?? []) as? [Any] ?? [], copyItems: true) as? [UICollectionViewLayoutAttributes] ?? []
-        
-        for attributes in layout_arr {
-            
-            // cell 宽度
-            let item_width = (collectionView?.frame.size.width ?? 0) - (collectionView?.contentInset.left ?? 0)*2 + coverFlow_between_cycle
-            // cell 中心x
-            let center_x = item_width / 2
-            // 图片的中心x
-            let image_center_x = attributes.center.x - coverFlow_between_cycle/2
-            let relative_distance_x = image_center_x - (collectionView?.contentOffset.x ?? 0)
-            
-            // step 相对 中心显示位置的x距离   中心显示位置是图片的中心
-            var step:CGFloat = 0
-            var temp_left_offset_x:CGFloat = 0
-            
-            let temp_image_width = item_width-coverFlow_between_cycle
-            
-            if attributes.center.x < item_width {
-                
-                temp_left_offset_x = (collectionView?.contentOffset.x ?? 0) + (collectionView?.contentInset.left ?? 0)
-                step = (abs(temp_left_offset_x) > item_width ? item_width : abs(temp_left_offset_x))
-                
-            } else {
-                
-                if (temp_image_width/2 - attributes.center.x + (collectionView?.contentInset.left ?? 0)*2.5) + coverFlow_between_cycle/2 > 0 {
-                    //左侧的
-                    temp_left_offset_x = center_x - relative_distance_x - (collectionView?.contentInset.left ?? 0) + coverFlow_between_cycle/2
-                    step = (abs(temp_left_offset_x) > item_width ? item_width : abs(temp_left_offset_x))
-                    
-                } else {
-                    //右侧的
-                    temp_left_offset_x = center_x - relative_distance_x + (collectionView?.contentInset.left ?? 0) - coverFlow_between_cycle/2
-                    step = (abs(temp_left_offset_x) > item_width ? item_width : abs(temp_left_offset_x))
-                }
-            }
-            
-            // 缩放比例公式
-            let scale_x = CGFloat(fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))) / 5 + 4/5
-            let scale_y = CGFloat(fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))) * 0.53641458 + 2/3
-            //            let scale = 1 - (step / item_width / 2)
-            
-            attributes.transform = CGAffineTransform.init(scaleX: scale_x, y: scale_y)
+        var temp_arr:[UICollectionViewLayoutAttributes] = []
+        let items = collectionView?.numberOfItems(inSection: 0) ?? 0
+
+        for i in 0..<items {
+
+            let att = self.layoutAttributesForItem(at: IndexPath.init(row: i, section: 0)) ?? UICollectionViewLayoutAttributes.init()
+            temp_arr.append(att)
         }
-        
-        return layout_arr
+
+        return temp_arr
     }
     
-    /** 返回indexPath位置cell对应的布局属性*/
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return nil
-    }
-    /** 返回indexPath位置头和脚视图对应的布局属性*/
-    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return nil
+    override var collectionViewContentSize: CGSize {
+        let longest = self.column_heights.sorted(by: <).first ?? 0
+        return CGSize.init(width: (collectionView?.frame.size.width ?? 0), height: longest)
     }
     
     /// 作用：如果返回YES，那么collectionView显示的范围发生改变时，就会重新刷新布局
@@ -113,34 +107,5 @@ extension CyclePageWaterfallFlow:UICollectionViewDelegateFlowLayout {
     ///                 layoutAttributesForElementsInRect:
     override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
-    }
-    /// 作用：返回值决定了collectionView停止滚动时最终的偏移量（contentOffset）
-    ///
-    /// - Parameters:
-    ///   - proposedContentOffset: 原本情况下，collectionView停止滚动时最终的偏移量
-    ///   - velocity: 滚动速率，通过这个参数可以了解滚动的方向
-    /// - Returns: 停止滚动时最终的偏移量
-    override open func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        
-        // 保证滚动结束后视图的显示效果
-        
-        // 计算出最终显示的矩形框
-        let rect = CGRect.init(x: proposedContentOffset.x, y: 0, width: collectionView?.frame.width ?? 0, height: collectionView?.frame.height ?? 0)
-        
-        // 获得 super 已经计算好的布局的属性
-        let attributes_arr = super.layoutAttributesForElements(in: rect) ?? []
-        
-        let item_width = (collectionView?.frame.size.width ?? 0) - (collectionView?.contentInset.left ?? 0) * 2 + coverFlow_between_cycle
-        let center_x = proposedContentOffset.x + (item_width/2 + (collectionView?.contentInset.left ?? 0))
-        
-        var min_delta = CGFloat.greatestFiniteMagnitude
-        
-        for attributes in attributes_arr {
-            if abs(min_delta) > abs(attributes.center.x - center_x) {
-                min_delta = attributes.center.x - center_x
-            }
-        }
-        
-        return CGPoint.init(x: proposedContentOffset.x + min_delta, y: proposedContentOffset.y)
     }
 }
