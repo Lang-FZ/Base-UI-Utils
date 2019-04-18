@@ -13,12 +13,15 @@ import UIKit
 open class CyclePagePhotoModel: NSObject {
     
     /** 属性 */
-    public var collection_width:CGFloat = 0
+    public var collection_width_height:CGFloat = 0
     
     public var photoData:[CyclePagePhotoModel] = []
     
     public var photoName:String = ""
     public var photoUrl:URL?
+    
+    public var image:UIImage?
+    public var photo_width_height:CGFloat = 1
     
     override public init() {
         super.init()

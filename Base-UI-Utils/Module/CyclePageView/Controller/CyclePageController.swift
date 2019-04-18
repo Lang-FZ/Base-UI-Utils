@@ -4,7 +4,7 @@
 //
 //  Created by LangFZ on 2019/4/4.
 //  Copyright © 2019 LangFZ. All rights reserved.
-//
+//  1.移动 小于多少隐藏 2.离屏渲染 3.图片数据紊乱
 
 import UIKit
 
@@ -21,12 +21,31 @@ class CyclePageController: NoneNaviBarController {
     public var current_page:Int = 0         //当前第几页
     public var before_after_add = 2         //可以循环时 前后各加几个
     
-    private let collection_width = kScreenW_static
+    private var collection_size = CGSize.zero
     
     public var item_size = CGSize.init(width: kScreenW_static - coverFlow_left_inset - (coverFlow_left_inset - coverFlow_between_cycle), height: frameMath_static(150))
     
     public var data: CyclePagePhotoModel = CyclePagePhotoModel.init() {
         didSet {
+            
+            switch cycle_style {
+            case .cover_flow:
+                print_debug("cover_flow")
+                collection_size = CGSize.init(width: kScreenW, height: frameMath(150))
+                
+            case .waterfall_flow:
+                
+                is_page_loop = false
+                waterfallFlow.data = data
+                
+                if waterfallFlow.scrollDirection == .horizontal {
+                    //横向滚动
+                    collection_size = CGSize.init(width: kScreenW, height: frameMath(200))
+                } else {
+                    //纵向滚动
+                    collection_size = CGSize.init(width: kScreenW, height: kScreenH-44-39)
+                }
+            }
             
             if data.photoData.count > 2 && data.photoData.count >= before_after_add && is_page_loop {
                 //大于2 前后各加2 可循环
@@ -71,11 +90,10 @@ class CyclePageController: NoneNaviBarController {
     // waterfall_flow
     private lazy var waterfallFlow: CyclePageWaterfallFlow = {
         let waterfallFlow = CyclePageWaterfallFlow.init()
-        waterfallFlow.scrollDirection = .vertical
+        waterfallFlow.scrollDirection = .horizontal
         waterfallFlow.sectionInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
         waterfallFlow.minimumLineSpacing = waterfallFlow_between_line
         waterfallFlow.minimumInteritemSpacing = waterfallFlow_between_interitem
-        waterfallFlow.estimatedItemSize = CGSize.init(width: kScreenW-waterfallFlow_inset_left_right*2, height: 1)
         return waterfallFlow
     }()
     
@@ -86,19 +104,31 @@ class CyclePageController: NoneNaviBarController {
         
         switch cycle_style {
         case .cover_flow:
+            
             item_size = CGSize.init(width: kScreenW - coverFlow_left_inset - (coverFlow_left_inset - coverFlow_between_cycle), height: frameMath(150))
             coverFlow.itemSize = item_size
             flow_layout = coverFlow
             
-            cycle_page = UICollectionView.init(frame: CGRect.init(x: 0, y: 200, width: collection_width, height: frameMath(150)), collectionViewLayout: flow_layout as! UICollectionViewLayout)
+            cycle_page = UICollectionView.init(frame: CGRect.init(x: 0, y: 200, width: collection_size.width, height: collection_size.height), collectionViewLayout: flow_layout as! UICollectionViewLayout)
+            cycle_page?.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0.1)  //类似分页的减速效果
             cycle_page?.register(CyclePageCollectionCell.self, forCellWithReuseIdentifier: CyclePage_Identifier)
             
         case .waterfall_flow:
-            is_page_loop = false
-            waterfallFlow.estimatedItemSize = CGSize.init(width: (collection_width-waterfallFlow_inset_left_right*2-waterfallFlow_between_line*CGFloat.init(waterfallFlow_section_count-1))/CGFloat(waterfallFlow_section_count), height: CGFloat.leastNormalMagnitude)
-            flow_layout = waterfallFlow
             
-            cycle_page = UICollectionView.init(frame: CGRect.init(x: 0, y: 44, width: collection_width, height: kScreenH-44-39), collectionViewLayout: flow_layout as! UICollectionViewLayout)
+            if waterfallFlow.scrollDirection == .horizontal {
+                //横向滚动
+                waterfallFlow.estimatedItemSize = CGSize.init(width: CGFloat.leastNormalMagnitude, height: (collection_size.height-waterfallFlow_inset_top_bottom*2-waterfallFlow_between_line*CGFloat.init(waterfallFlow_section_count-1))/CGFloat(waterfallFlow_section_count))
+                flow_layout = waterfallFlow
+                let rect = CGRect.init(x: 0, y: 44, width: collection_size.width, height: collection_size.height)
+                cycle_page = UICollectionView.init(frame: rect, collectionViewLayout: flow_layout as! UICollectionViewLayout)
+
+            } else {
+                //纵向滚动
+                waterfallFlow.estimatedItemSize = CGSize.init(width: (collection_size.width-waterfallFlow_inset_left_right*2-waterfallFlow_between_line*CGFloat.init(waterfallFlow_section_count-1))/CGFloat(waterfallFlow_section_count), height: CGFloat.leastNormalMagnitude)
+                flow_layout = waterfallFlow
+                let rect = CGRect.init(x: 0, y: 44, width: collection_size.width, height: collection_size.height)
+                cycle_page = UICollectionView.init(frame: rect, collectionViewLayout: flow_layout as! UICollectionViewLayout)
+            }
             cycle_page?.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier)
         }
         
@@ -107,7 +137,6 @@ class CyclePageController: NoneNaviBarController {
         cycle_page?.showsHorizontalScrollIndicator = false
         cycle_page?.delegate = self
         cycle_page?.dataSource = self
-        cycle_page?.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0.1)  //类似分页的减速效果
         
         cycle_page?.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(dismissController)))
         
@@ -115,9 +144,15 @@ class CyclePageController: NoneNaviBarController {
         case .cover_flow:
             cycle_page?.contentInset = UIEdgeInsets.init(top: 0, left: coverFlow_left_inset, bottom: 0, right: coverFlow_left_inset - coverFlow_between_cycle)
         case .waterfall_flow:
-            cycle_page?.contentInset = UIEdgeInsets.init(top: waterfallFlow_inset_top_bottom, left: 0, bottom: waterfallFlow_inset_top_bottom, right: 0)
+            
+            if waterfallFlow.scrollDirection == .horizontal {
+                //横向滚动
+                cycle_page?.contentInset = UIEdgeInsets.init(top: 0, left: waterfallFlow_inset_left_right, bottom: 0, right: waterfallFlow_inset_left_right)
+            } else {
+                //纵向滚动
+                cycle_page?.contentInset = UIEdgeInsets.init(top: waterfallFlow_inset_top_bottom, left: 0, bottom: waterfallFlow_inset_top_bottom, right: 0)
+            }
         }
-        
         
         return cycle_page ?? UICollectionView.init()
     }()
@@ -137,6 +172,7 @@ class CyclePageController: NoneNaviBarController {
         view.backgroundColor = UIColor.purple
         
         view.addSubview(cycle_page)
+        cycle_page.reloadData()
     }
     
     override open func didReceiveMemoryWarning() {
@@ -184,11 +220,28 @@ extension CyclePageController: UICollectionViewDelegate,UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CyclePage_waterfall_Identifier, for: indexPath) as? CyclePageWaterfallCell
             
             let model = data.photoData[indexPath.item]
-            model.collection_width = collection_width
+            
+            if waterfallFlow.scrollDirection == .horizontal {
+                //横向滚动
+                model.collection_width_height = collection_size.height
+            } else {
+                //纵向滚动
+                model.collection_width_height = collection_size.width
+            }
+            
+            cell?.direction = waterfallFlow.scrollDirection
             cell?.model = model
             
             cell?.click_item = { [weak self] in
                 self?.clickCollectionView(indexPath.item)
+            }
+            cell?.created_image = { [weak self] (image,width_height) in
+                
+                self?.data.photoData[indexPath.item].image = image
+                self?.data.photoData[indexPath.item].photo_width_height = CGFloat.init(width_height)
+                
+                self?.waterfallFlow.data = self?.data ?? CyclePagePhotoModel.init()
+                self?.cycle_page.reloadItems(at: [indexPath])
             }
             
             return cell!
