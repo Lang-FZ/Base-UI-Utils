@@ -17,6 +17,7 @@ public let waterfallFlow_inset_top_bottom = NSObject.frameMath_static(5)   //ins
 class CyclePageWaterfallFlow: UICollectionViewFlowLayout {
     
     public var data: CyclePagePhotoModel = CyclePagePhotoModel.init()
+    private var current_tag: Int = 0
     
     lazy private var column_width_height:CGFloat = {
         
@@ -83,7 +84,11 @@ extension CyclePageWaterfallFlow:UICollectionViewDelegateFlowLayout {
             let y = CGFloat.init(shortCol)*column_width_height+waterfallFlow_inset_top_bottom+waterfallFlow_between_line*CGFloat.init(shortCol)
             
             //获取cell宽度
-            let width = data.photoData[indexPath.item].photo_width_height
+            var width = data.photoData[indexPath.item].photo_width_height
+            
+            if width == 0 {
+                width = 1
+            }
             
             layout_arr?.frame = CGRect.init(x: x, y: y, width: width, height: column_width_height)
             column_widths_heights[shortCol] = x + width
@@ -94,7 +99,11 @@ extension CyclePageWaterfallFlow:UICollectionViewDelegateFlowLayout {
             let y = (shortest == 0 ? shortest : shortest + waterfallFlow_between_interitem)
             
             //获取cell高度
-            let height = data.photoData[indexPath.item].photo_width_height
+            var height = data.photoData[indexPath.item].photo_width_height
+            
+            if height == 0 {
+                height = 1
+            }
             
             layout_arr?.frame = CGRect.init(x: x, y: y, width: column_width_height, height: height)
             column_widths_heights[shortCol] = y + height
@@ -111,6 +120,9 @@ extension CyclePageWaterfallFlow:UICollectionViewDelegateFlowLayout {
     ///             UICollectionViewLayoutAttributes对象决定了cell的排布方式（frame等）
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
+        current_tag += 1
+        let tag = Int.init(current_tag)
+        
         column_widths_heights = []
         for _ in 0..<waterfallFlow_section_count {
             column_widths_heights.append(0)
@@ -125,7 +137,11 @@ extension CyclePageWaterfallFlow:UICollectionViewDelegateFlowLayout {
             temp_arr.append(att)
         }
         
-        return temp_arr
+        if tag == current_tag {
+            return temp_arr
+        } else {
+            return []
+        }
     }
     
     override var collectionViewContentSize: CGSize {
@@ -141,6 +157,12 @@ extension CyclePageWaterfallFlow:UICollectionViewDelegateFlowLayout {
             size = CGSize.init(width: (collectionView?.frame.size.width ?? 0), height: longest)
         }
         
+        if size.width == 0 {
+            size = CGSize.init(width: 1, height: size.height)
+        } else if size.height == 0 {
+            size = CGSize.init(width: size.width, height: 1)
+        }
+        
         return size
     }
     
@@ -151,7 +173,7 @@ extension CyclePageWaterfallFlow:UICollectionViewDelegateFlowLayout {
     ///             一旦重新刷新布局，就会按顺序调用下面的方法：
     ///                 prepare
     ///                 layoutAttributesForElementsInRect:
-//    override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-//        return true
-//    }
+    override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
+    }
 }

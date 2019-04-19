@@ -45,6 +45,10 @@ class CyclePageController: NoneNaviBarController {
                     //纵向滚动
                     collection_size = CGSize.init(width: kScreenW, height: kScreenH-44-39)
                 }
+// MARK: - 错误写法
+                for item in 0..<data.photoData.count {
+                    cycle_page.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier+"s\(0)i\(item)")
+                }
             }
             
             if data.photoData.count > 2 && data.photoData.count >= before_after_add && is_page_loop {
@@ -129,7 +133,7 @@ class CyclePageController: NoneNaviBarController {
                 let rect = CGRect.init(x: 0, y: 44, width: collection_size.width, height: collection_size.height)
                 cycle_page = UICollectionView.init(frame: rect, collectionViewLayout: flow_layout as! UICollectionViewLayout)
             }
-            cycle_page?.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier)
+//            cycle_page?.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier)
         }
         
         cycle_page?.backgroundColor = UIColor.clear
@@ -217,36 +221,50 @@ extension CyclePageController: UICollectionViewDelegate,UICollectionViewDataSour
             
         case .waterfall_flow:
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CyclePage_waterfall_Identifier, for: indexPath) as? CyclePageWaterfallCell
-            
-            let model = data.photoData[indexPath.item]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CyclePage_waterfall_Identifier+"s\(indexPath.section)i\(indexPath.item)", for: indexPath) as? CyclePageWaterfallCell
+// MARK: - 错误写法
+//            if cell == nil {
+////                cycle_page?.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier)
+//                cell = CyclePageWaterfallCell.identi
+//
+//            }
             
             if waterfallFlow.scrollDirection == .horizontal {
                 //横向滚动
-                model.collection_width_height = collection_size.height
+                data.photoData[indexPath.item].collection_width_height = collection_size.height
             } else {
                 //纵向滚动
-                model.collection_width_height = collection_size.width
+                data.photoData[indexPath.item].collection_width_height = collection_size.width
             }
             
             cell?.direction = waterfallFlow.scrollDirection
-            cell?.model = model
-            
+            cell?.created_image = { [weak self] (image,width_height) in
+                self?.changeModelData(indexPath, image, width_height)
+            }
             cell?.click_item = { [weak self] in
                 self?.clickCollectionView(indexPath.item)
             }
-            cell?.created_image = { [weak self] (image,width_height) in
-                
-                self?.data.photoData[indexPath.item].image = image
-                self?.data.photoData[indexPath.item].photo_width_height = CGFloat.init(width_height)
-                
-                self?.waterfallFlow.data = self?.data ?? CyclePagePhotoModel.init()
-                self?.cycle_page.reloadItems(at: [indexPath])
-            }
+            
+            cell?.model = data.photoData[indexPath.item]
             
             return cell!
         }
     }
+    
+    /// 修改瀑布流单个数据并刷新
+    ///
+    /// - Parameters:
+    ///   - index: 索引
+    ///   - image: 图片
+    ///   - width_height: 图片 宽或高
+    func changeModelData(_ index:IndexPath,_ image:UIImage,_ width_height:CGFloat) {
+        
+        self.data.photoData[index.item].image = image
+        self.data.photoData[index.item].photo_width_height = CGFloat.init(width_height)
+        self.waterfallFlow.data = self.data
+        self.cycle_page.reloadItems(at: [index])
+    }
+    
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if cycle_page_loop {
