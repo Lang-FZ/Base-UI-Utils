@@ -79,7 +79,7 @@ class CyclePageWaterfallCell: UICollectionViewCell {
                         
 //                        loading.startAnimating()
                         
-                        SDWebImageDownloader.shared().downloadImage(with: model.photoUrl, options: SDWebImageDownloaderOptions.useNSURLCache, progress: nil) { (url_image, data, error, success) in
+                        SDWebImageDownloader.shared.downloadImage(with: model.photoUrl, options: SDWebImageDownloaderOptions.useNSURLCache, progress: nil) { (url_image, data, error, success) in
                             
 //                            self.loading.stopAnimating()
                             self.image.image = url_image
@@ -137,7 +137,7 @@ class CyclePageWaterfallCell: UICollectionViewCell {
                         })
                         
 //                        loading.startAnimating()
-                        SDWebImageDownloader.shared().downloadImage(with: model.photoUrl, options: SDWebImageDownloaderOptions.useNSURLCache, progress: nil) { (url_image, data, error, success) in
+                        SDWebImageDownloader.shared.downloadImage(with: model.photoUrl, options: SDWebImageDownloaderOptions.useNSURLCache, progress: nil) { (url_image, data, error, success) in
                             
 //                            self.loading.stopAnimating()
                             self.image.image = url_image

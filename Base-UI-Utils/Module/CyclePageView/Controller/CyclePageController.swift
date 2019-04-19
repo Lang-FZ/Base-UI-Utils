@@ -4,7 +4,7 @@
 //
 //  Created by LangFZ on 2019/4/4.
 //  Copyright © 2019 LangFZ. All rights reserved.
-//  1.移动 小于多少隐藏 2.离屏渲染 3.图片数据紊乱
+//
 
 import UIKit
 
@@ -45,7 +45,7 @@ class CyclePageController: NoneNaviBarController {
                     //纵向滚动
                     collection_size = CGSize.init(width: kScreenW, height: kScreenH-44-39)
                 }
-// MARK: - 错误写法
+                
                 for item in 0..<data.photoData.count {
                     cycle_page.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier+"s\(0)i\(item)")
                 }
@@ -133,7 +133,6 @@ class CyclePageController: NoneNaviBarController {
                 let rect = CGRect.init(x: 0, y: 44, width: collection_size.width, height: collection_size.height)
                 cycle_page = UICollectionView.init(frame: rect, collectionViewLayout: flow_layout as! UICollectionViewLayout)
             }
-//            cycle_page?.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier)
         }
         
         cycle_page?.backgroundColor = UIColor.clear
@@ -188,7 +187,6 @@ class CyclePageController: NoneNaviBarController {
         if touch.view == self.view {
             dismissController()
         } else if touch.view == cycle_page {
-//            clickCollectionView(current_page)
             dismissController()
         }
     }
@@ -222,12 +220,6 @@ extension CyclePageController: UICollectionViewDelegate,UICollectionViewDataSour
         case .waterfall_flow:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CyclePage_waterfall_Identifier+"s\(indexPath.section)i\(indexPath.item)", for: indexPath) as? CyclePageWaterfallCell
-// MARK: - 错误写法
-//            if cell == nil {
-////                cycle_page?.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier)
-//                cell = CyclePageWaterfallCell.identi
-//
-//            }
             
             if waterfallFlow.scrollDirection == .horizontal {
                 //横向滚动
