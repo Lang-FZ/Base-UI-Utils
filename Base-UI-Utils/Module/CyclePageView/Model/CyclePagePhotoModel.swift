@@ -20,6 +20,7 @@ open class CyclePagePhotoModel: NSObject {
     public var photoName:String = ""
     public var photoUrl:URL?
     
+    public var indexPath:IndexPath?
     public var image:UIImage?
     public var photo_width_height:CGFloat = 1
     

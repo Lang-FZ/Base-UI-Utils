@@ -22,6 +22,11 @@ class CyclePageController: NoneNaviBarController {
     public var before_after_add = 2         //可以循环时 前后各加几个
     
     private var collection_size = CGSize.zero
+    public var direction:UICollectionView.ScrollDirection = .vertical {
+        didSet {
+            waterfallFlow.scrollDirection = direction
+        }
+    }
     
     public var item_size = CGSize.init(width: kScreenW_static - coverFlow_left_inset - (coverFlow_left_inset - coverFlow_between_cycle), height: frameMath_static(150))
     
@@ -44,10 +49,6 @@ class CyclePageController: NoneNaviBarController {
                 } else {
                     //纵向滚动
                     collection_size = CGSize.init(width: kScreenW, height: kScreenH-44-39)
-                }
-                
-                for item in 0..<data.photoData.count {
-                    cycle_page.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier+"s\(0)i\(item)")
                 }
             }
             
@@ -133,6 +134,8 @@ class CyclePageController: NoneNaviBarController {
                 let rect = CGRect.init(x: 0, y: 44, width: collection_size.width, height: collection_size.height)
                 cycle_page = UICollectionView.init(frame: rect, collectionViewLayout: flow_layout as! UICollectionViewLayout)
             }
+            
+            cycle_page?.register(CyclePageWaterfallCell.self, forCellWithReuseIdentifier: CyclePage_waterfall_Identifier)
         }
         
         cycle_page?.backgroundColor = UIColor.clear
@@ -219,7 +222,7 @@ extension CyclePageController: UICollectionViewDelegate,UICollectionViewDataSour
             
         case .waterfall_flow:
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CyclePage_waterfall_Identifier+"s\(indexPath.section)i\(indexPath.item)", for: indexPath) as? CyclePageWaterfallCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CyclePage_waterfall_Identifier, for: indexPath) as? CyclePageWaterfallCell
             
             if waterfallFlow.scrollDirection == .horizontal {
                 //横向滚动
@@ -229,9 +232,11 @@ extension CyclePageController: UICollectionViewDelegate,UICollectionViewDataSour
                 data.photoData[indexPath.item].collection_width_height = collection_size.width
             }
             
+            data.photoData[indexPath.item].indexPath = indexPath
+            
             cell?.direction = waterfallFlow.scrollDirection
-            cell?.created_image = { [weak self] (image,width_height) in
-                self?.changeModelData(indexPath, image, width_height)
+            cell?.created_image = { [weak self] (image,width_height,index) in
+                self?.changeModelData(index ?? IndexPath.init(row: 0, section: 0), image, width_height)
             }
             cell?.click_item = { [weak self] in
                 self?.clickCollectionView(indexPath.item)

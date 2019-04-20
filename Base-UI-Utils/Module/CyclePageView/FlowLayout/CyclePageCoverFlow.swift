@@ -87,7 +87,7 @@ extension CyclePageCoverFlow:UICollectionViewDelegateFlowLayout {
             let scale_x = CGFloat(fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))) / 5 + 4/5
             let scale_y = CGFloat(fabsf(cosf(Float(step / center_x * CGFloat.init(Double.pi/5))))) * 0.53641458 + 2/3
 //            let scale = 1 - (step / item_width / 2)
-
+            
             attributes.transform = CGAffineTransform.init(scaleX: scale_x, y: scale_y)
         }
         

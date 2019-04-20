@@ -13,7 +13,7 @@ import SDWebImage
 class CyclePageWaterfallCell: UICollectionViewCell {
     
     public var click_item:(() -> ())?
-    public var created_image:((_ image:UIImage, _ width_height:CGFloat) -> ())?
+    public var created_image:((_ image:UIImage, _ width_height:CGFloat,_ indexPath:IndexPath?) -> ())?
     
     public var direction:UICollectionView.ScrollDirection = .vertical
     
@@ -59,6 +59,8 @@ class CyclePageWaterfallCell: UICollectionViewCell {
                             make.height.equalTo(image_height)
                         })
                         
+                        let index = self.model.indexPath
+                        
                         DispatchQueue.global().async {
                             
                             if let temp_image = UIImage.init(named: self.model.photoName) {
@@ -66,7 +68,7 @@ class CyclePageWaterfallCell: UICollectionViewCell {
                                 DispatchQueue.main.async {
                                     
                                     let image_width = image_height/temp_image.size.height*temp_image.size.width
-                                    self.created_image?(temp_image,image_width)
+                                    self.created_image?(temp_image,image_width,index)
                                 }
                             }
                         }
@@ -79,14 +81,15 @@ class CyclePageWaterfallCell: UICollectionViewCell {
                         
 //                        loading.startAnimating()
                         
+                        let index = self.model.indexPath
+                        
                         SDWebImageDownloader.shared.downloadImage(with: model.photoUrl, options: SDWebImageDownloaderOptions.useNSURLCache, progress: nil) { (url_image, data, error, success) in
                             
 //                            self.loading.stopAnimating()
-                            self.image.image = url_image
                             
                             if let image:UIImage = url_image {
                                 let image_width = image_height/image.size.height*image.size.width
-                                self.created_image?(image,image_width)
+                                self.created_image?(image,image_width,index)
                             }
                         }
                     }
@@ -118,6 +121,8 @@ class CyclePageWaterfallCell: UICollectionViewCell {
                             make.height.equalTo(0)
                         })
                         
+                        let index = self.model.indexPath
+                        
                         DispatchQueue.global().async {
                             
                             if let temp_image = UIImage.init(named: self.model.photoName) {
@@ -125,7 +130,7 @@ class CyclePageWaterfallCell: UICollectionViewCell {
                                 DispatchQueue.main.async {
                                     
                                     let image_height = image_width/temp_image.size.width*temp_image.size.height
-                                    self.created_image?(temp_image,image_height)
+                                    self.created_image?(temp_image,image_height,index)
                                 }
                             }
                         }
@@ -136,15 +141,16 @@ class CyclePageWaterfallCell: UICollectionViewCell {
                             make.height.equalTo(0)
                         })
                         
+                        let index = self.model.indexPath
+                        
 //                        loading.startAnimating()
                         SDWebImageDownloader.shared.downloadImage(with: model.photoUrl, options: SDWebImageDownloaderOptions.useNSURLCache, progress: nil) { (url_image, data, error, success) in
                             
 //                            self.loading.stopAnimating()
-                            self.image.image = url_image
                             
                             if let image:UIImage = UIImage.init(data: url_image!.sd_imageData()!) {
                                 let image_height = image_width/image.size.width*image.size.height
-                                self.created_image?(image,image_height)
+                                self.created_image?(image,image_height,index)
                             }
                         }
                     }
