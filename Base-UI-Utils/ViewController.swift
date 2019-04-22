@@ -19,9 +19,15 @@ class ViewController: UIViewController {
 //        let touch:UITouch = (((touches as NSSet).anyObject() as AnyObject) as! UITouch)
         
 //        testPhotoViewer()
-        testCyclePage()
+//        testCyclePage()
+        testAudio()
     }
     
+    private func testAudio() {
+        
+        let audio:TestAudioController = TestAudioController()
+        self.navigationController?.pushViewController(audio, animated: true)
+    }
     private func testCyclePage() {
         
         let cyclePageModel = CyclePagePhotoModel.init()
